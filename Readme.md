@@ -30,7 +30,7 @@ Well, you can always configure it to fit exactly your needs.
 ### Bigger payloads
 
 CakeHax by default has a size limit for payloads. This is because entry points have size restrictions.  
-To get around this problem, CakeHax comes with a small (a bit more than 7KB) payload, that loads a bigger payload from the SD card.  
+To get around this problem, CakeHax comes with a small-ish (a bit more than 7KB) payload, that loads a bigger payload from the SD card.  
 To use this feature, replace `launcher` with `bigpayload` when calling the makefile, and use dd with a seek of 272.  
 Please note that some changes will be made to your environment (see [this](https://github.com/mid-kid/CakeHax/blob/master/source/payload/start.s#L8) and [this](https://github.com/mid-kid/CakeHax/blob/master/source/payload/main.c#L35)).  
 This environment is mostly identical to the LauncherTemplate.dat's environment.
@@ -41,6 +41,21 @@ The makefile of CakeHax has some options for your convenience:
 
 Name    |Default  |Description
 --------|---------|-----------
-dir\_out|.        |Where the to-be-injected .dat file will be placed (and removed!)
+dir\_out|.        |Where the to-be-injected .dat file will be placed (and removed when doing clean!)
 name    |Cakes.dat|The name of the .dat file. (NOTE: This can't be renamed after it is built, or it won't work.)
 path    |/        |Path in the SD card where the .dat file will be located and loaded from the ROP
+
+Thanks
+------
+
+* Normmatt for the sdmmc code
+* ChaN for FatFs
+* Roxas75 for firmlaunchax on MSET
+* YifanLu and dukesrg for Spider3DSTools
+* naehrwert for p3ds
+* The KARL and OSKA guys for providing example code and firmware offsets (bootstrap)
+* 3dbrew for info
+* Yellows8 for firmlaunchax and memchunkhax
+* smea and Yellows8 for gspwn
+* Apache Thunder for being a fearless test-kanninchen.
+* Gateway for some offsets
