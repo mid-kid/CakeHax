@@ -2,7 +2,7 @@ rwildcard = $(foreach d, $(wildcard $1*), $(filter $(subst *, %, $2), $d) $(call
 
 # This should be set externally
 name ?= Cakes.dat
-path ?= /
+path ?=
 dir_out ?= .
 
 CC := arm-none-eabi-gcc

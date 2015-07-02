@@ -23,7 +23,7 @@ void main()
     if (f_mount(&fs, "0:", 1) != FR_OK) return;
 
     // Load the payload
-    if (f_open(&handle, LAUNCHER_PATH, FA_READ) != FR_OK) return;
+    if (f_open(&handle, "/" LAUNCHER_PATH, FA_READ) != FR_OK) return;
     payload_size = f_size(&handle) - payload_offset;
     if (f_lseek(&handle, payload_offset) != FR_OK) return;
     if (f_read(&handle, payload_loc, payload_size, &bytes_read) != FR_OK) return;
