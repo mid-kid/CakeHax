@@ -137,14 +137,6 @@ $(dir_build)/spider_9x/main.elf: CFLAGS := -DENTRY_SPIDER -DENTRY_SPIDER_9x \
 $(dir_build)/spider_9x/main.elf: $(objects_spider_9x)
 	$(LD) $(LDFLAGS) -T linker_spider.ld $(OUTPUT_OPTION) $^
 
-$(dir_build)/payload/%.o: $(dir_source)/payload/%.c
-	@mkdir -p "$(@D)"
-	$(COMPILE.c) $(OUTPUT_OPTION) $<
-
-$(dir_build)/payload/%.o: $(dir_source)/payload/%.s
-	@mkdir -p "$(@D)"
-	$(COMPILE.s) $(OUTPUT_OPTION) $<
-
 # Fatfs requires to be built in thumb
 $(dir_build)/payload/fatfs/%.o: $(dir_source)/payload/fatfs/%.c
 	@mkdir -p "$(@D)"
@@ -153,6 +145,14 @@ $(dir_build)/payload/fatfs/%.o: $(dir_source)/payload/fatfs/%.c
 $(dir_build)/payload/fatfs/%.o: $(dir_source)/payload/fatfs/%.s
 	@mkdir -p "$(@D)"
 	$(COMPILE.s) -mthumb -mthumb-interwork $(OUTPUT_OPTION) $<
+	
+$(dir_build)/payload/%.o: $(dir_source)/payload/%.c
+	@mkdir -p "$(@D)"
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
+
+$(dir_build)/payload/%.o: $(dir_source)/payload/%.s
+	@mkdir -p "$(@D)"
+	$(COMPILE.s) $(OUTPUT_OPTION) $<
 
 .SECONDEXPANSION:
 $(dir_build)/%.o: $(dir_source)/$$(notdir $$*).c
