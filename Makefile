@@ -34,6 +34,8 @@ objects_mset_4x := $(patsubst $(dir_build)/%, $(dir_build)/mset_4x/%, \
 				   $(objects))
 objects_mset_4x_dg := $(patsubst $(dir_build)/%, $(dir_build)/mset_4x_dg/%, \
 					  $(objects))
+objects_mset_6x := $(patsubst $(dir_build)/%, $(dir_build)/mset_6x/%, \
+					  $(objects))
 objects_spider_4x := $(patsubst $(dir_build)/%, $(dir_build)/spider_4x/%, \
 					 $(objects))
 objects_spider_5x := $(patsubst $(dir_build)/%, $(dir_build)/spider_5x/%, \
@@ -44,7 +46,7 @@ objects_spider_9x := $(patsubst $(dir_build)/%, $(dir_build)/spider_9x/%, \
 objects_payload := $(call get_objects, \
 				   $(call rwildcard, $(dir_source)/payload, *.s *.c))
 
-versions := mset_4x mset_4x_dg spider_4x spider_5x spider_9x
+versions := mset_4x mset_4x_dg mset_6x spider_4x spider_5x spider_9x
 
 rops := $(foreach ver, $(versions), $(dir_build)/$(ver)/rop.dat)
 
@@ -71,6 +73,7 @@ $(dir_out)/$(name): $(rops)
 	touch $@
 	dd if=$(dir_build)/mset_4x/rop.dat of=$@
 	dd if=$(dir_build)/mset_4x_dg/rop.dat of=$@ bs=512 seek=80
+	dd if=$(dir_build)/mset_6x/rop.dat of=$@ bs=512 seek=112
 	dd if=$(dir_build)/spider_4x/rop.dat of=$@ bs=512 seek=144
 	dd if=$(dir_build)/spider_5x/rop.dat of=$@ bs=512 seek=176
 	dd if=$(dir_build)/spider_9x/rop.dat of=$@ bs=512 seek=208
@@ -80,6 +83,9 @@ $(dir_build)/mset_4x/rop.dat: $(dir_build)/mset_4x/main.bin
 
 $(dir_build)/mset_4x_dg/rop.dat: $(dir_build)/mset_4x_dg/main.bin
 	$(PYTHON2) $(dir_tools)/build-rop.py MSET_4X_DG $< $@
+
+$(dir_build)/mset_6x/rop.dat: $(dir_build)/mset_6x/main.bin
+	$(PYTHON2) $(dir_tools)/build-rop.py MSET_6X $< $@
 
 $(dir_build)/spider_4x/rop.dat: $(dir_build)/spider_4x/rop.dat.dec
 	$(PYTHON2) $(dir_tools)/spider-encrypt.py $< $@
@@ -117,6 +123,12 @@ $(dir_build)/mset_4x_dg/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
 $(dir_build)/mset_4x_dg/main.elf: CFLAGS := -DENTRY_MSET -DENTRY_MSET_4x_DG \
 								  $(ARM11FLAGS) $(CFLAGS)
 $(dir_build)/mset_4x_dg/main.elf: $(objects_mset_4x_dg)
+	$(LD) $(LDFLAGS) -T linker_mset.ld $(OUTPUT_OPTION) $^
+
+$(dir_build)/mset_6x/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
+$(dir_build)/mset_6x/main.elf: CFLAGS := -DENTRY_MSET -DENTRY_MSET_6x \
+								  $(ARM11FLAGS) $(CFLAGS)
+$(dir_build)/mset_6x/main.elf: $(objects_mset_6x)
 	$(LD) $(LDFLAGS) -T linker_mset.ld $(OUTPUT_OPTION) $^
 
 $(dir_build)/spider_4x/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
