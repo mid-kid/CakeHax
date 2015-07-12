@@ -78,29 +78,15 @@ $(dir_out)/$(name): $(rops)
 	dd if=$(dir_build)/spider_5x/rop.dat of=$@ bs=512 seek=176
 	dd if=$(dir_build)/spider_9x/rop.dat of=$@ bs=512 seek=208
 
-$(dir_build)/mset_4x/rop.dat: $(dir_build)/mset_4x/main.bin
-	$(PYTHON2) $(dir_tools)/build-rop.py MSET_4X $< $@
-
-$(dir_build)/mset_4x_dg/rop.dat: $(dir_build)/mset_4x_dg/main.bin
-	$(PYTHON2) $(dir_tools)/build-rop.py MSET_4X_DG $< $@
-
-$(dir_build)/mset_6x/rop.dat: $(dir_build)/mset_6x/main.bin
-	$(PYTHON2) $(dir_tools)/build-rop.py MSET_6X $< $@
-
-$(dir_build)/spider_4x/rop.dat: $(dir_build)/spider_4x/rop.dat.dec
+$(dir_build)/spider_%/rop.dat: rop_param = SPIDER_$(shell echo $* | tr a-z A-Z)
+$(dir_build)/spider_%/rop.dat: $(dir_build)/spider_%/rop.dat.dec
 	$(PYTHON2) $(dir_tools)/spider-encrypt.py $< $@
-$(dir_build)/spider_4x/rop.dat.dec: $(dir_build)/spider_4x/main.bin
-	$(PYTHON2) $(dir_tools)/build-rop.py SPIDER_4X $< $@
+$(dir_build)/spider_%/rop.dat.dec: $(dir_build)/spider_%/main.bin
+	$(PYTHON2) $(dir_tools)/build-rop.py $(rop_param) $< $@
 
-$(dir_build)/spider_5x/rop.dat: $(dir_build)/spider_5x/rop.dat.dec
-	$(PYTHON2) $(dir_tools)/spider-encrypt.py $< $@
-$(dir_build)/spider_5x/rop.dat.dec: $(dir_build)/spider_5x/main.bin
-	$(PYTHON2) $(dir_tools)/build-rop.py SPIDER_5X $< $@
-
-$(dir_build)/spider_9x/rop.dat: $(dir_build)/spider_9x/rop.dat.dec
-	$(PYTHON2) $(dir_tools)/spider-encrypt.py $< $@
-$(dir_build)/spider_9x/rop.dat.dec: $(dir_build)/spider_9x/main.bin
-	$(PYTHON2) $(dir_tools)/build-rop.py SPIDER_9X $< $@
+$(dir_build)/mset_%/rop.dat: rop_param = MSET_$(shell echo $* | tr a-z A-Z)
+$(dir_build)/mset_%/rop.dat: $(dir_build)/mset_%/main.bin
+	$(PYTHON2) $(dir_tools)/build-rop.py $(rop_param) $< $@
 
 # Create bin from elf
 $(dir_build)/%/main.bin: $(dir_build)/%/main.elf
