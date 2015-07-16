@@ -82,12 +82,12 @@ $(dir_build)/spider_%/rop.dat: rop_param = SPIDER_$(shell echo $* | tr a-z A-Z)
 $(dir_build)/spider_%/rop.dat: $(dir_build)/spider_%/rop.dat.dec
 	$(PYTHON2) $(dir_tools)/spider-encrypt.py $< $@
 $(dir_build)/spider_%/rop.dat.dec: $(dir_build)/spider_%/main.bin
-	@make -C rop3ds ASFLAGS="-D$(rop_param) -DARMCODE=../$<"
+	@make -C rop3ds rop.dat ASFLAGS="-D$(rop_param) -DARM_CODE=../$<"
 	@mv rop3ds/rop.dat $@
 
 $(dir_build)/mset_%/rop.dat: rop_param = MSET_$(shell echo $* | tr a-z A-Z)
 $(dir_build)/mset_%/rop.dat: $(dir_build)/mset_%/main.bin
-	@make -C rop3ds ASFLAGS="-D$(rop_param) -DARMCODE=../$<"
+	@make -C rop3ds rop.dat ASFLAGS="-D$(rop_param) -DARM_CODE=../$<"
 	@mv rop3ds/rop.dat $@
 
 # Create bin from elf
