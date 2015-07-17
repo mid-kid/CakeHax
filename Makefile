@@ -10,10 +10,10 @@ AS := arm-none-eabi-as
 LD := arm-none-eabi-ld
 OC := arm-none-eabi-objcopy
 
-PYTHON2 := python
+PYTHON3 := python
 PYTHON_VER_MAJOR := $(word 2, $(subst ., , $(shell python --version 2>&1)))
-ifneq ($(PYTHON_VER_MAJOR), 2)
-	PYTHON2 := python2
+ifneq ($(PYTHON_VER_MAJOR), 3)
+	PYTHON3 := python3
 endif
 
 dir_source := source
@@ -80,7 +80,7 @@ $(dir_out)/$(name): $(rops)
 
 $(dir_build)/spider_%/rop.dat: rop_param = SPIDER_$(shell echo $* | tr a-z A-Z)
 $(dir_build)/spider_%/rop.dat: $(dir_build)/spider_%/rop.dat.dec
-	$(PYTHON2) spiderman.py $< $@
+	$(PYTHON3) spiderman.py $< $@
 $(dir_build)/spider_%/rop.dat.dec: $(dir_build)/spider_%/main.bin
 	@make -C rop3ds rop.dat ASFLAGS="-D$(rop_param) -DARM_CODE=../$<"
 	@mv rop3ds/rop.dat $@
