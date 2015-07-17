@@ -30,19 +30,6 @@ get_objects = $(patsubst $(dir_source)/%.s, $(dir_build)/%.o, \
 
 objects := $(call get_objects, $(wildcard $(dir_source)/*.s $(dir_source)/*.c))
 
-objects_mset_4x := $(patsubst $(dir_build)/%, $(dir_build)/mset_4x/%, \
-				   $(objects))
-objects_mset_4x_dg := $(patsubst $(dir_build)/%, $(dir_build)/mset_4x_dg/%, \
-					  $(objects))
-objects_mset_6x := $(patsubst $(dir_build)/%, $(dir_build)/mset_6x/%, \
-					  $(objects))
-objects_spider_4x := $(patsubst $(dir_build)/%, $(dir_build)/spider_4x/%, \
-					 $(objects))
-objects_spider_5x := $(patsubst $(dir_build)/%, $(dir_build)/spider_5x/%, \
-					 $(objects))
-objects_spider_9x := $(patsubst $(dir_build)/%, $(dir_build)/spider_9x/%, \
-					 $(objects))
-
 objects_payload := $(call get_objects, \
 				   $(call rwildcard, $(dir_source)/payload, *.s *.c))
 
@@ -101,40 +88,22 @@ $(dir_build)/payload/main.elf: $(objects_payload)
 	# FatFs requires libgcc for __aeabi_uidiv
 	$(CC) -nostartfiles $(LDFLAGS) -T linker_payload.ld $(OUTPUT_OPTION) $^
 
-$(dir_build)/mset_4x/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
-$(dir_build)/mset_4x/main.elf: CFLAGS := -DENTRY_MSET -DENTRY_MSET_4x \
-										 $(ARM11FLAGS) $(CFLAGS)
-$(dir_build)/mset_4x/main.elf: $(objects_mset_4x)
+PERCENT = %
+
+$(dir_build)/%/main.elf: version_param = $(shell echo $(*D) | tr a-z A-Z)
+$(dir_build)/%/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
+$(dir_build)/%/main.elf: TCFLAGS := $(CFLAGS)
+
+$(dir_build)/mset_%/main.elf: CFLAGS = -DENTRY_MSET -DENTRY_$(version_param) \
+										 $(ARM11FLAGS) $(TCFLAGS)
+.SECONDEXPANSION:
+$(dir_build)/mset_%/main.elf: $$(patsubst $(dir_build)/$$(PERCENT), $(dir_build)/mset_$$*/$$(PERCENT), $(objects))
 	$(LD) $(LDFLAGS) -T linker_mset.ld $(OUTPUT_OPTION) $^
 
-$(dir_build)/mset_4x_dg/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
-$(dir_build)/mset_4x_dg/main.elf: CFLAGS := -DENTRY_MSET -DENTRY_MSET_4x_DG \
-								  $(ARM11FLAGS) $(CFLAGS)
-$(dir_build)/mset_4x_dg/main.elf: $(objects_mset_4x_dg)
-	$(LD) $(LDFLAGS) -T linker_mset.ld $(OUTPUT_OPTION) $^
-
-$(dir_build)/mset_6x/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
-$(dir_build)/mset_6x/main.elf: CFLAGS := -DENTRY_MSET -DENTRY_MSET_6x \
-								  $(ARM11FLAGS) $(CFLAGS)
-$(dir_build)/mset_6x/main.elf: $(objects_mset_6x)
-	$(LD) $(LDFLAGS) -T linker_mset.ld $(OUTPUT_OPTION) $^
-
-$(dir_build)/spider_4x/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
-$(dir_build)/spider_4x/main.elf: CFLAGS := -DENTRY_SPIDER -DENTRY_SPIDER_4x \
-								 $(ARM11FLAGS) $(CFLAGS)
-$(dir_build)/spider_4x/main.elf: $(objects_spider_4x)
-	$(LD) $(LDFLAGS) -T linker_spider.ld $(OUTPUT_OPTION) $^
-
-$(dir_build)/spider_5x/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
-$(dir_build)/spider_5x/main.elf: CFLAGS := -DENTRY_SPIDER -DENTRY_SPIDER_5x \
-								 $(ARM11FLAGS) $(CFLAGS)
-$(dir_build)/spider_5x/main.elf: $(objects_spider_5x)
-	$(LD) $(LDFLAGS) -T linker_spider.ld $(OUTPUT_OPTION) $^
-
-$(dir_build)/spider_9x/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
-$(dir_build)/spider_9x/main.elf: CFLAGS := -DENTRY_SPIDER -DENTRY_SPIDER_9x \
-								 $(ARM11FLAGS) $(CFLAGS)
-$(dir_build)/spider_9x/main.elf: $(objects_spider_9x)
+$(dir_build)/spider_%/main.elf: CFLAGS = -DENTRY_SPIDER -DENTRY_$(version_param) \
+								 $(ARM11FLAGS) $(TCFLAGS)
+.SECONDEXPANSION:
+$(dir_build)/spider_%/main.elf: $$(patsubst $(dir_build)/$$(PERCENT), $(dir_build)/spider_$$*/$$(PERCENT), $(objects))
 	$(LD) $(LDFLAGS) -T linker_spider.ld $(OUTPUT_OPTION) $^
 
 # Fatfs requires to be built in thumb
