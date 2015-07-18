@@ -21,7 +21,7 @@ int (*svcSleepThread)(unsigned long long nanoseconds);
 
 #if defined(ENTRY_MSET_4X) || defined(ENTRY_MSET_4X_DG)
     #define FUNC_MEMCPY 0x001BFA60
-    #define FUNC_GSPGPU_FLUSHDATACACHE 0x0013C5D4
+    #define FUNC_GSPGPU_FLUSHDATACACHE 0x001346C4
     #define FUNC_NN__GXLOW__CTR__CMDREQQUEUETX__TRYENQUEUE 0x001AC924
     #define FUNC_SVCCONTROLMEMORY 0x001C3E24
     #define FUNC_FOPEN 0x001B82A8
@@ -42,7 +42,7 @@ int (*svcSleepThread)(unsigned long long nanoseconds);
 
 #elif defined(ENTRY_MSET_6X)
     #define FUNC_MEMCPY 0x001C814C
-    #define FUNC_GSPGPU_FLUSHDATACACHE 0x0013D3FC
+    #define FUNC_GSPGPU_FLUSHDATACACHE 0x00134A84
     #define FUNC_NN__GXLOW__CTR__CMDREQQUEUETX__TRYENQUEUE 0x001B4E8C
     #define FUNC_SVCCONTROLMEMORY 0x001CC63C
     #define FUNC_FOPEN 0x001C08B4

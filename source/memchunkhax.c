@@ -74,14 +74,6 @@ void memchunk_arm11hax(void (*func)())
 
     // Tricks to clear the instruction cache
 #if defined(ENTRY_MSET)
-    uint8_t *const top_left_fb = (uint8_t *const)0x14184E60;
-    uint8_t *const top_right_fb = (uint8_t *const)0x14282160;
-    for(int i = 0; i < 0x00046500; ++i)
-    {
-        top_left_fb[i] = 0xFF;
-        top_right_fb[i] = 0xFF;
-    }
-
     int slide_len = 0x1000;
 
     // Build a NOP slide
