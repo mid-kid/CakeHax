@@ -18,7 +18,7 @@ How to use this in your project
 You copy this into your project directory, and add a few lines into your Makefile:  
 ```
 make dir_out=out name=Launcher.dat -C CakeHax launcher
-dd if=mypayload.bin of=out/Launcher.dat bs=512 seek=256
+dd if=mypayload.bin of=out/Launcher.dat bs=512 seek=640
 
 clean:
     make dir_out=out name=Launcher.dat -C CakeHax clean
@@ -31,7 +31,7 @@ Well, you can always configure it to fit exactly your needs.
 
 CakeHax by default has a size limit for payloads. This is because entry points have size restrictions.  
 To get around this problem, CakeHax comes with a small-ish (a bit more than 7KB) payload, that loads a bigger payload from the SD card.  
-To use this feature, replace `launcher` with `bigpayload` when calling the makefile, and use dd with a seek of 272.  
+To use this feature, replace `launcher` with `bigpayload` when calling the makefile, and use dd with a seek of 700.  
 Please note that some changes will be made to your environment (see [this](https://github.com/mid-kid/CakeHax/blob/master/source/payload/start.s#L8) and [this](https://github.com/mid-kid/CakeHax/blob/master/source/payload/main.c#L35)).  
 This environment is mostly identical to the LauncherTemplate.dat's environment.
 
@@ -48,6 +48,7 @@ path    |/        |Path in the SD card where the .dat file will be located and l
 Thanks
 ------
 
+* dukesrg for rop3ds
 * Normmatt for the sdmmc code
 * ChaN for FatFs
 * Roxas75 for firmlaunchax on MSET
@@ -57,5 +58,5 @@ Thanks
 * 3dbrew for info
 * Yellows8 for firmlaunchax and memchunkhax
 * smea and Yellows8 for gspwn
-* Apache Thunder for being a fearless test-kanninchen.
+* Apache Thunder, _Dean, xinerqu for being fearless test-kanninchens.
 * Gateway for some offsets
