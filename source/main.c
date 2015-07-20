@@ -44,7 +44,7 @@ void main()
     // Spider has size restrictions to the Launcher, so we need to load the arm9
     //   payload separately.
     result = load_file((char *)(0x14000000 + APP_CFW_OFFSET),
-                       APP_LAUNCHER_PATH, 0x20000, ARM9_PAYLOAD_MAXSIZE);
+                       APP_LAUNCHER_PATH, 0x50000, ARM9_PAYLOAD_MAXSIZE);
     if (result != 0) return;  // The user is probably an idiot, bailing out.
 
     // Now, we gain arm11 kernel mode
