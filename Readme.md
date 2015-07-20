@@ -58,5 +58,5 @@ Thanks
 * 3dbrew for info
 * Yellows8 for firmlaunchax and memchunkhax
 * smea and Yellows8 for gspwn
-* Apache Thunder, _Dean, xinerqu for being fearless test-kanninchens.
+* Apache Thunder, _Dean, xinerqu for being fearless test-kaninchen.
 * Gateway for some offsets
