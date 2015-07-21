@@ -47,22 +47,22 @@ clean:
 
 # Big payload
 $(dir_build)/bigpayload.built: $(dir_out)/$(name) $(dir_build)/payload/main.bin
-	dd if=$(dir_build)/payload/main.bin of=$(dir_out)/$(name) bs=512 seek=640
+	dd if=$(dir_build)/payload/main.bin of=$(dir_out)/$(name) bs=512 seek=144
 	@touch $@
 
 # Throw everything together
 $(dir_out)/$(name): $(rops) $(dir_build)/mset/main.bin $(dir_build)/spider/main.bin
 	touch $@
-	dd if=$(dir_build)/mset_4x/rop.dat of=$@
-	dd if=$(dir_build)/mset_4x_dg/rop.dat of=$@ bs=512 seek=80
-	dd if=$(dir_build)/mset_6x/rop.dat of=$@ bs=512 seek=112
-	dd if=$(dir_build)/spider/main.bin of=$@ bs=512 seek=144
-	dd if=$(dir_build)/mset/main.bin of=$@ bs=512 seek=176
+	dd if=$(dir_build)/spider/main.bin of=$@ bs=512 seek=0
+	dd if=$(dir_build)/mset_4x/rop.dat of=$@ bs=512 seek=32
+	dd if=$(dir_build)/mset_4x_dg/rop.dat of=$@ bs=512 seek=34
+	dd if=$(dir_build)/mset_6x/rop.dat of=$@ bs=512 seek=40
+	dd if=$(dir_build)/mset/main.bin of=$@ bs=512 seek=64
 
 # MSET ROPs
 $(dir_build)/mset_%/rop.dat: rop_param = MSET_$(shell echo $* | tr a-z A-Z)
 $(dir_build)/mset_%/rop.dat:
-	@make -C rop3ds LoadCodeMset.dat ASFLAGS="-D$(rop_param) -DARM_CODE_OFFSET=0x16000"
+	@make -C rop3ds LoadCodeMset.dat ASFLAGS="-D$(rop_param) -DARM_CODE_OFFSET=0x8000"
 	@mkdir -p "$(@D)"
 	@mv rop3ds/LoadCodeMset.dat $@
 

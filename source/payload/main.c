@@ -5,7 +5,7 @@
 #include "../launcher_path.h"
 
 void *payload_loc = (void *)0x08000000;
-unsigned int payload_offset = 0x57800;
+unsigned int payload_offset = 0x22000;
 unsigned int payload_size = 0x50000;
 
 // This is where the loader writes the framebuffer offsets
