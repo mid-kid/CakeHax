@@ -51,19 +51,20 @@ $(dir_build)/bigpayload.built: $(dir_out)/$(name) $(dir_build)/payload/main.bin
 	@touch $@
 
 # Throw everything together
-$(dir_out)/$(name): $(rops) $(dir_build)/spider/main.bin
+$(dir_out)/$(name): $(rops) $(dir_build)/mset/main.bin $(dir_build)/spider/main.bin
 	touch $@
 	dd if=$(dir_build)/mset_4x/rop.dat of=$@
 	dd if=$(dir_build)/mset_4x_dg/rop.dat of=$@ bs=512 seek=80
 	dd if=$(dir_build)/mset_6x/rop.dat of=$@ bs=512 seek=112
 	dd if=$(dir_build)/spider/main.bin of=$@ bs=512 seek=144
+	dd if=$(dir_build)/mset/main.bin of=$@ bs=512 seek=176
 
 # MSET ROPs
 $(dir_build)/mset_%/rop.dat: rop_param = MSET_$(shell echo $* | tr a-z A-Z)
-$(dir_build)/mset_%/rop.dat: $(dir_build)/mset/main.bin
-	@make -C rop3ds rop.dat ASFLAGS="-D$(rop_param) -DARM_CODE=../$<"
+$(dir_build)/mset_%/rop.dat:
+	@make -C rop3ds LoadCodeMset.dat ASFLAGS="-D$(rop_param) -DARM_CODE_OFFSET=0x16000"
 	@mkdir -p "$(@D)"
-	@mv rop3ds/rop.dat $@
+	@mv rop3ds/LoadCodeMset.dat $@
 
 # Create bin from elf
 $(dir_build)/%/main.bin: $(dir_build)/%/main.elf
