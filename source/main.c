@@ -9,13 +9,13 @@ int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t si
     uint32_t file_handle[8] = {0};
     uint32_t bytes_read = 0;
 
-    int result = fopen(&file_handle, path, 1);
+    int result = app->fopen(&file_handle, path, 1);
     if (result != 0) {
         return 1;
     }
     file_handle[1] = offset;
 
-    fread(&file_handle, &bytes_read, dest, size);
+    app->fread(&file_handle, &bytes_read, dest, size);
 
     return 0;
 }
@@ -35,6 +35,10 @@ void arm11_kernel_code()
 void main()
 {
     int result;
+
+    // Some offsets that differ per entry
+    result = set_app_offsets();
+    if (result != 0) return;
 
     // Some offsets differ per firmware
     result = set_firmware_offsets();

