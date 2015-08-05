@@ -86,7 +86,7 @@ void memchunk_arm11hax(void (*func)())
         app_code_offset = 0x03E6D000;
     }
     else { // > firm 4.x
-        app_code_offset = 0x03F00000;
+        app_code_offset = 0x7B00000;
     }
 
     gspwn_copy((void *)(0x14000000 + app_code_offset + 0x4000), arm11_buffer,

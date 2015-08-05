@@ -32,8 +32,23 @@ void arm11_kernel_code()
     while (1) {};
 }
 
+void cls(){
+    uint8_t *const top_left_fb = (uint8_t *const)0x14184E60;
+    uint8_t *const top_right_fb = (uint8_t *const)0x14282160;
+    uint8_t *const top_left_fb2 = (uint8_t *const)0x141CB370;
+    uint8_t *const top_right_fb2 = (uint8_t *const)0x142C8670;
+    for(int i = 0; i < 0x00046500; ++i)
+    {
+        top_left_fb[i] = 0xFF;
+        top_right_fb[i] = 0xFF;
+        top_left_fb2[i] = 0xFF;
+        top_right_fb2[i] = 0xFF;
+    }
+}
+
 void main()
 {
+    cls();
     int result;
 
     // Some offsets that differ per entry

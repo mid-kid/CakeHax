@@ -1,7 +1,7 @@
 rwildcard = $(foreach d, $(wildcard $1*), $(filter $(subst *, %, $2), $d) $(call rwildcard, $d/, $2))
 
 # This should be set externally
-name ?= Cakes.dat
+name ?= reiNand.dat
 path ?=
 dir_out ?= .
 
