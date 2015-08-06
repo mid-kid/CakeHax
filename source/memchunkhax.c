@@ -48,6 +48,7 @@ void corrupted_svcCreateThread(__attribute__((unused)) void (*func)())
 
 void memchunk_arm11hax(void (*func)())
 {
+
     // I need some memory locations to use
     uint32_t *mem_hax_mem = (uint32_t *)APP_MEM_HAX_MEM;
     uint32_t *mem_hax_mem_free = (uint32_t *)((uint32_t)mem_hax_mem + 0x1000);

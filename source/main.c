@@ -20,6 +20,21 @@ int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t si
     return 0;
 }
 
+int save_file(const char *src, short unsigned int *path, uint32_t offset, uint32_t size)
+{
+    uint32_t file_handle[8] = {0};
+    uint32_t bytes_read = 0;
+ 
+    int result = app->fopen(&file_handle, path, 6);
+    if (result != 0) {
+        return 1;
+    }
+ 
+    app->fwrite(&file_handle, &bytes_read, src, size);
+ 
+    return 0;
+}
+ 
 __attribute__((naked))
 void arm11_kernel_code()
 {
@@ -32,23 +47,8 @@ void arm11_kernel_code()
     while (1) {};
 }
 
-void cls(){
-    uint8_t *const top_left_fb = (uint8_t *const)0x14184E60;
-    uint8_t *const top_right_fb = (uint8_t *const)0x14282160;
-    uint8_t *const top_left_fb2 = (uint8_t *const)0x141CB370;
-    uint8_t *const top_right_fb2 = (uint8_t *const)0x142C8670;
-    for(int i = 0; i < 0x00046500; ++i)
-    {
-        top_left_fb[i] = 0xFF;
-        top_right_fb[i] = 0xFF;
-        top_left_fb2[i] = 0xFF;
-        top_right_fb2[i] = 0xFF;
-    }
-}
-
 void main()
 {
-    cls();
     int result;
 
     // Some offsets that differ per entry
@@ -62,6 +62,8 @@ void main()
     // Load the arm9 payload to memory
     // Spider has size restrictions to the Launcher, so we need to load the arm9
     //   payload separately.
+    //save_file(0x1FF80000, L"YS:/cfgmem.bin", 0, 0x70);
+    //save_file(0x1FF81000, L"YS:/shrmem.bin", 0, 0xC4);
     result = load_file((char *)(0x14000000 + APP_CFW_OFFSET),
                        APP_LAUNCHER_PATH, 0x12000, ARM9_PAYLOAD_MAXSIZE);
     if (result != 0) return;  // The user is probably an idiot, bailing out.
