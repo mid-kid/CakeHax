@@ -2,7 +2,7 @@ rwildcard = $(foreach d, $(wildcard $1*), $(filter $(subst *, %, $2), $d) $(call
 
 # This should be set externally
 name ?= Cakes.dat
-path ?=
+filepath ?=
 dir_out ?= .
 
 CC := arm-none-eabi-gcc
@@ -16,7 +16,7 @@ dir_build := build
 ARM9FLAGS := -mcpu=arm946e-s -march=armv5te
 ARM11FLAGS := -mcpu=mpcore
 ASFLAGS := -mlittle-endian
-CFLAGS := -marm $(ASFLAGS) -O2 -std=c11 -MMD -MP -fno-builtin -fshort-wchar -Wall -Wextra -Wno-main -DLAUNCHER_PATH='"$(path)$(name)"'
+CFLAGS := -marm $(ASFLAGS) -O2 -std=c11 -MMD -MP -fno-builtin -fshort-wchar -Wall -Wextra -Wno-main -DLAUNCHER_PATH='"$(filepath)$(name)"'
 
 get_objects = $(patsubst $(dir_source)/%.s, $(dir_build)/%.o, \
 			  $(patsubst $(dir_source)/%.c, $(dir_build)/%.o, $1))
