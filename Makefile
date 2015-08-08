@@ -1,7 +1,7 @@
 rwildcard = $(foreach d, $(wildcard $1*), $(filter $(subst *, %, $2), $d) $(call rwildcard, $d/, $2))
 
 # This should be set externally
-name ?= reiNand.dat
+name ?= Cakes.dat
 path ?=
 dir_out ?= .
 
@@ -18,7 +18,6 @@ ARM9FLAGS := -mcpu=arm946e-s -march=armv5te
 ARM11FLAGS := -mcpu=mpcore
 ASFLAGS := -mlittle-endian
 CFLAGS := -marm $(ASFLAGS) -O2 -std=c11 -MMD -MP -fno-builtin -fshort-wchar -Wall -Wextra -Wno-main -DLAUNCHER_PATH='"$(path)$(name)"'
-FLAGS := dir_out=$(abspath $(dir_out))
 
 get_objects = $(patsubst $(dir_source)/%.s, $(dir_build)/%.o, \
 			  $(patsubst $(dir_source)/%.c, $(dir_build)/%.o, $1))
@@ -46,7 +45,7 @@ bigpayload: $(dir_build)/bigpayload.built
 .PHONY: clean
 clean:
 	rm -rf $(dir_out)/$(name) $(dir_build)
-	@$(MAKE) $(FLAGS) -C $(dir_rop3ds) clean
+	@$(MAKE) -C $(dir_rop3ds) clean
 
 # Big payload
 $(dir_build)/bigpayload.built: $(dir_out)/$(name) $(dir_build)/payload/main.bin
