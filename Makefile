@@ -12,6 +12,7 @@ OC := arm-none-eabi-objcopy
 
 dir_source := source
 dir_build := build
+dir_rop3ds := rop3ds
 
 ARM9FLAGS := -mcpu=arm946e-s -march=armv5te
 ARM11FLAGS := -mcpu=mpcore
@@ -26,7 +27,7 @@ objects := $(call get_objects, $(wildcard $(dir_source)/*.s $(dir_source)/*.c))
 objects_payload := $(call get_objects, \
 				   $(call rwildcard, $(dir_source)/payload, *.s *.c))
 
-versions := mset_4x mset_4x_dg mset_6x
+versions := mset_4x mset_4x_dg mset_4x_ndg mset_6x
 
 rops := $(foreach ver, $(versions), $(dir_build)/$(ver)/rop.dat)
 
@@ -44,6 +45,7 @@ bigpayload: $(dir_build)/bigpayload.built
 .PHONY: clean
 clean:
 	rm -rf $(dir_out)/$(name) $(dir_build)
+	@$(MAKE) -C $(dir_rop3ds) clean
 
 # Big payload
 $(dir_build)/bigpayload.built: $(dir_out)/$(name) $(dir_build)/payload/main.bin
@@ -56,6 +58,7 @@ $(dir_out)/$(name): $(rops) $(dir_build)/mset/main.bin $(dir_build)/spider/main.
 	dd if=$(dir_build)/spider/main.bin of=$@ bs=512 seek=0
 	dd if=$(dir_build)/mset_4x/rop.dat of=$@ bs=512 seek=32
 	dd if=$(dir_build)/mset_4x_dg/rop.dat of=$@ bs=512 seek=34
+	dd if=$(dir_build)/mset_4x_ndg/rop.dat of=$@ bs=512 seek=36
 	dd if=$(dir_build)/mset_6x/rop.dat of=$@ bs=512 seek=40
 	dd if=$(dir_build)/mset/main.bin of=$@ bs=512 seek=64
 

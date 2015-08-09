@@ -48,6 +48,7 @@ void corrupted_svcCreateThread(__attribute__((unused)) void (*func)())
 
 void memchunk_arm11hax(void (*func)())
 {
+
     // I need some memory locations to use
     uint32_t *mem_hax_mem = (uint32_t *)APP_MEM_HAX_MEM;
     uint32_t *mem_hax_mem_free = (uint32_t *)((uint32_t)mem_hax_mem + 0x1000);
@@ -82,12 +83,14 @@ void memchunk_arm11hax(void (*func)())
     // Copy the NOP slide
     uint32_t app_code_offset = 0;
     uint32_t kernel_version = *(uint32_t *)0x1FF80000;
+    uint32_t console_type = *(uint32_t *)0x1FF80030;
     if(kernel_version < 0x02230600) { // firm 4.x
         app_code_offset = 0x03E6D000;
     }
     else { // > firm 4.x
         app_code_offset = 0x03F00000;
     }
+    if(console_type >= 6) app_code_offset = 0x7B00000; //N3DS
 
     gspwn_copy((void *)(0x14000000 + app_code_offset + 0x4000), arm11_buffer,
             slide_len * 4, 0xE1A00000, 0);

@@ -19,7 +19,7 @@ int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t si
 
     return 0;
 }
-
+ 
 __attribute__((naked))
 void arm11_kernel_code()
 {
