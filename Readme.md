@@ -51,6 +51,7 @@ Thanks
 * dukesrg for rop3ds
 * Normmatt for the sdmmc code
 * ChaN for FatFs
+* Reisyukaku for MSET on n3ds
 * Roxas75 for firmlaunchax on MSET
 * YifanLu and dukesrg for Spider3DSTools
 * naehrwert for p3ds
