@@ -43,7 +43,7 @@ Name    |Default  |Description
 --------|---------|-----------
 dir\_out|.        |Where the to-be-injected .dat file will be placed (and removed when doing clean!)
 name    |Cakes.dat|The name of the .dat file. (NOTE: This can't be renamed after it is built, or it won't work.)
-path    |/        |Path in the SD card where the .dat file will be located and loaded from the ROP
+filepath|/        |Path in the SD card where the .dat file will be located and loaded from the ROP
 
 Thanks
 ------

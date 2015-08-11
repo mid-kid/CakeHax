@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "launcher_path.h"
 
-typedef struct compat_app_s
+struct app_offsets
 {
     void (*memcpy)(void *dest, void *src, uint32_t len);
     int (*GSPGPU_FlushDataCache)(void *address, uint32_t length);
@@ -20,9 +20,9 @@ typedef struct compat_app_s
     int (*GX_SetTextureCopy)(void *input_buffer, void *output_buffer, uint32_t size, int in_x, int in_y, int out_x, int out_y, int flags);
     int (*svcSleepThread)(unsigned long long nanoseconds);
 #endif
-} compat_app_s;
+};
 
-extern compat_app_s* app;
+extern struct app_offsets *app;
 int set_app_offsets();
 
 #if defined(ENTRY_MSET)

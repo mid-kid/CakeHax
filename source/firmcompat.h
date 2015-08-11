@@ -15,9 +15,12 @@ struct firmware_offsets {
     uint32_t pdn_regs;
     uint32_t pxi_regs;
     uint32_t gpu_regs;
+#ifdef ENTRY_MSET
+    uint32_t app_code_offset;
+#endif
 };
 
-struct firmware_offsets *fw;
+extern struct firmware_offsets *fw;
 
 int set_firmware_offsets();
 
