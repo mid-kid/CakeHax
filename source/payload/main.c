@@ -59,10 +59,13 @@ void main()
     // This is mostly to adhere to the gateway "standard",
     //   so existing gateway payloads don't have to be modified.
     // Write the framebuffer offsets to the places where gateway expects them
-    *(uint32_t **)0x080FFFC0 = framebuffers->top_left;
-    *(uint32_t **)0x080FFFC4 = framebuffers->top_right;
-    *(uint32_t **)0x080FFFD4 = framebuffers->bottom;
-    *(uint32_t *)0x080FFFD8 = 0;  // Select top framebuffer?
+    *(uint32_t *)0x080FFFC0 = (uint32_t)framebuffers->top_left;
+    *(uint32_t *)0x080FFFC8 = (uint32_t)framebuffers->top_right;
+    *(uint32_t *)0x080FFFD0 = (uint32_t)framebuffers->bottom;
+
+    // Select the first framebuffer for each screen, since we only write that one.
+    *(uint32_t *)0x080FFFD8 = 0;
+    *(uint32_t *)0x080FFFDC = 0;
 
     // Loaded correctly. The rest is up to the payload.
     clear_screens();
