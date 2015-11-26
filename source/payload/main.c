@@ -43,6 +43,7 @@ void main()
     FATFS fs;
     FIL handle;
     unsigned int bytes_read;
+    uintptr_t p;
 
     // Mount the SD card
     if (f_mount(&fs, "0:", 1) != FR_OK) return;
@@ -69,6 +70,17 @@ void main()
 
     // Loaded correctly. The rest is up to the payload.
     clear_screens();
+
+    // Drain write buffer
+    __asm__ volatile ("mcr p15, 0, %0, c7, c10, 4\n" :: "r"(0));
+
+    for (p = (uintptr_t)payload_loc; p < (uintptr_t)payload_loc + payload_size; p += 32)
+	__asm__ volatile (
+	    // Clean data cache
+	    "mcr p15, 0, %0, c7, c10, 1\n"
+	    // Flush instruction cache
+	    "mcr p15, 0, %0, c7, c5, 1\n"
+            :: "r"(p));
 
     // Jump to the payload, right behind the interrupt vector table.
     ((void (*)())(payload_loc + 0x30))();
