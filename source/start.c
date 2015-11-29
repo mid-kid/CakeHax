@@ -20,8 +20,7 @@ static int load_file(char *dest, short unsigned int *path, uint32_t offset, uint
     return 0;
 }
 
-static __attribute__((naked))
-void arm11_kernel_code()
+static void arm11_kernel_code()
 {
     __asm__ volatile ("clrex");
 
