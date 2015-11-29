@@ -7,7 +7,7 @@
 static int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t size)
 {
     uint32_t file_handle[8] = {0};
-    uint32_t bytes_read = 0;
+    uint32_t bytes_read;
 
     int result = app->fopen(&file_handle, path, 1);
     if (result != 0) {
