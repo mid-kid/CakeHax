@@ -32,7 +32,7 @@ void arm11_kernel_code()
     while (1) {};
 }
 
-void __attribute__((section(".text.start"), used)) _start()
+void __attribute__((noreturn, section(".text.start"), used)) _start()
 {
     // Some offsets that differ per entry
     set_app_offsets();

@@ -85,7 +85,7 @@ void corrupted_svcCreateThread(__attribute__((unused)) void (*func)())
     __asm__ volatile ("svc 8");
 }
 
-void memchunk_arm11hax(void (*func)())
+void __attribute__((noreturn)) memchunk_arm11hax(void (*func)())
 {
 
     // I need some memory locations to use
@@ -139,4 +139,5 @@ void memchunk_arm11hax(void (*func)())
 
     // Get into arm11
     corrupted_svcCreateThread(func);
+    __builtin_unreachable();
 }
