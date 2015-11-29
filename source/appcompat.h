@@ -21,7 +21,7 @@ struct app_offsets
 #endif
 };
 
-extern struct app_offsets *app;
+extern const struct app_offsets *app;
 int set_app_offsets();
 
 #if defined(ENTRY_MSET)
@@ -43,7 +43,6 @@ int set_app_offsets();
 #define APP_CHECK_MEM (APP_FCRAM_ADDR + 0x1000)
 #define APP_ARM11_BUFFER (APP_FCRAM_ADDR + 0x2000)
 #define APP_MEM_HAX_MEM (APP_FCRAM_ADDR + 0x50000)
-#define APP_COMPAT (APP_FCRAM_ADDR + 0x20000)
 #define APP_FIRM_COMPAT (APP_FCRAM_ADDR + 0x20100)
 
 #define ARM9_PAYLOAD_MAXSIZE 0x10000

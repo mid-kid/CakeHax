@@ -1,6 +1,6 @@
 #include "appcompat.h"
 
-struct app_offsets *app = (struct app_offsets *)APP_COMPAT;
+const struct app_offsets *app;
 
 static const struct app_offsets apps[] =
 {
@@ -209,7 +209,7 @@ int set_app_offsets()
     cur = apps;
     for (btm = cur + sizeof(apps) / sizeof(struct app_offsets); cur != btm; cur++)
         if (cur->spec == *(uint32_t *)0x0010000C) {
-            memcpy32(app, cur, sizeof(struct app_offsets));
+            app = cur;
             return 0;
         }
 
