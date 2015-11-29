@@ -202,17 +202,6 @@ static const struct app_offsets apps[] =
 #endif
 };
 
-// Slow ass but safe memcpy
-void _memcpy(void *dst, const void *src, uint32_t size)
-{
-    char *destc = (char *)dst;
-    const char *srcc = (const char *)src;
-    for(uint32_t i = 0; i < size; i++)
-    {
-        destc[i] = srcc[i];
-    }
-}
-
 int set_app_offsets()
 {
     const struct app_offsets *cur, *btm;
@@ -220,7 +209,7 @@ int set_app_offsets()
     cur = apps;
     for (btm = cur + sizeof(apps) / sizeof(struct app_offsets); cur != btm; cur++)
         if (cur->spec == *(uint32_t *)0x0010000C) {
-            _memcpy(app, cur, sizeof(struct app_offsets));
+            memcpy32(app, cur, sizeof(struct app_offsets));
             return 0;
         }
 

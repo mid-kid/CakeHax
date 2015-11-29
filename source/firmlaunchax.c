@@ -6,6 +6,26 @@
 #include "arm11_tools.h"
 #include "jump_table.h"
 
+static void invalidate_data_cache()
+{
+    __asm__ volatile (
+        // Clean and Invalidate Entire Data Cache
+        "mcr p15, 0, %0, c7, c14, 0\n\t"
+        // Data Synchronization Barrier
+        "mcr p15, 0, %0, c7, c10, 4"
+        :: "r"(0));
+}
+
+static void invalidate_instruction_cache()
+{
+    __asm__ volatile (
+        "mcr p15, 0, %0, c7, c5, 0\n\t"
+        "mcr p15, 0, %0, c7, c5, 4\n\t"
+        "mcr p15, 0, %0, c7, c5, 6\n\t"
+        "mcr p15, 0, %0, c7, c10, 4"
+        :: "r"(0));
+}
+
 void setup_gpu()
 {
     volatile uint32_t *top_left1 = (volatile uint32_t *)(fw->gpu_regs + 0x468);
@@ -40,14 +60,14 @@ void firmlaunch_arm9hax()
 
     // Copy arm9 code
     uint32_t code_offset = 0x3F00000;
-    asm_memcpy((void *)(fw->fcram_address + code_offset),
+    memcpy32((void *)(fw->fcram_address + code_offset),
                (void *)(fw->fcram_address + APP_CFW_OFFSET), ARM9_PAYLOAD_MAXSIZE);
 
     // Prepare framebuffer info for arm9
     setup_gpu();
 
     // Copy the jump table
-    asm_memcpy((void *)fw->jump_table_address, &jump_table, (&jump_table_end - &jump_table + 1) * 4);
+    memcpy32((void *)fw->jump_table_address, &jump_table, (&jump_table_end - &jump_table + 1) * 4);
 
     // Write firmware-specific offsets to the jump table
     *(uint32_t *)(fw->jump_table_address +
