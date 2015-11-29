@@ -32,7 +32,7 @@ void arm11_kernel_code()
     while (1) {};
 }
 
-void main()
+void __attribute__((section(".text.start"), used)) _start()
 {
     int result;
 
