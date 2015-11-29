@@ -11,7 +11,7 @@ static int load_file(char *dest, short unsigned int *path, uint32_t offset, uint
 
     int result = app->fopen(&file_handle, path, 1);
     if (result != 0) {
-        return 1;
+        return result;
     }
     file_handle[1] = offset;
 
