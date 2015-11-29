@@ -26,7 +26,7 @@ static void invalidate_instruction_cache()
         :: "r"(0));
 }
 
-void setup_gpu()
+static void setup_gpu()
 {
     volatile uint32_t *top_left1 = (volatile uint32_t *)(fw->gpu_regs + 0x468);
     volatile uint32_t *top_left2 = (volatile uint32_t *)(fw->gpu_regs + 0x46C);

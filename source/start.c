@@ -4,7 +4,7 @@
 #include "memchunkhax.h"
 #include "firmlaunchax.h"
 
-int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t size)
+static int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t size)
 {
     uint32_t file_handle[8] = {0};
     uint32_t bytes_read = 0;
@@ -20,7 +20,7 @@ int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t si
     return 0;
 }
 
-__attribute__((naked))
+static __attribute__((naked))
 void arm11_kernel_code()
 {
     __asm__ volatile ("clrex");

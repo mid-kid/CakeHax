@@ -6,7 +6,7 @@
 #include "appcompat.h"
 #include "arm11_tools.h"
 
-void gspwn_copy(void *dest, void *src, uint32_t length, int check, int check_offset)
+static void gspwn_copy(void *dest, void *src, uint32_t length, int check, int check_offset)
 {
     // We'll use some memory to check the copy is being done right.
     void *check_mem = (void *)APP_CHECK_MEM;
@@ -31,7 +31,7 @@ void gspwn_copy(void *dest, void *src, uint32_t length, int check, int check_off
 }
 
 #if defined(ENTRY_MSET)
-void build_nop_slide(uint32_t *dest, unsigned int len)
+static void build_nop_slide(uint32_t *dest, unsigned int len)
 {
     unsigned int i;
     for (i = 0; i < len; i++) {
@@ -79,7 +79,7 @@ static void svcSleepThread(uint64_t ns)
 }
 #endif
 
-__attribute__((naked))
+static __attribute__((naked))
 void corrupted_svcCreateThread(__attribute__((unused)) void (*func)())
 {
     __asm__ volatile ("svc 8");
