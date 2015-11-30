@@ -12,7 +12,6 @@ struct app_offsets
     void (*nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue)(void *arg1, void *arg2);
     int (*fopen)(uint32_t (*handle)[], short unsigned int *path, int flags);
     int (*fread)(uint32_t (*handle)[], uint32_t *read, void *buffer, uint32_t size);
-    int (*fwrite)(uint32_t (*handle)[], uint32_t *written, void *src, uint32_t size);
 
     uint32_t gpuHandle;
 };

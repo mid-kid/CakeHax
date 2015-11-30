@@ -13,7 +13,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x001AC924,
         .fopen = (void *)0x001B82A8,
         .fread = (void *)0x001B3954,
-        .fwrite = (void *)0x001B3B50,
 
         .gpuHandle = (0x0027C580 + 0x58)
     }, {
@@ -24,7 +23,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x001B4E8C,
         .fopen = (void *)0x001C08B4,
         .fread = (void *)0x001BC188,
-        .fwrite = (void *)0x001BC380,
 
         .gpuHandle = (0x0028A580 + 0x58)
     }
@@ -37,7 +35,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x002CF3EC,
         .fopen = (void *)0x0025B0A4,
         .fread = (void *)0x002FC8E4,
-        .fwrite = (void *)0x00311D90,
 
         .gpuHandle = (0x003F54E8 + 0x58)
     }, {
@@ -48,7 +45,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BF4C,
         .fopen = (void *)0x0022FE44,
         .fread = (void *)0x001686C0,
-        .fwrite = (void *)0x00168748,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -59,7 +55,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BF04,
         .fopen = (void *)0x0022FE08,
         .fread = (void *)0x001686DC,
-        .fwrite = (void *)0x00168764,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -70,7 +65,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BA40,
         .fopen = (void *)0x0022E334,
         .fread = (void *)0x001674BC,
-        .fwrite = (void *)0x00167544,
 
         .gpuHandle = (0x003D6C40 + 0x58)
     }, {
@@ -81,7 +75,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BA54,
         .fopen = (void *)0x0022E2B0,
         .fread = (void *)0x00166FC8,
-        .fwrite = (void *)0x00167050,
 
         .gpuHandle = (0x003D6C40 + 0x58)
     }, {
@@ -92,7 +85,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BA6C,
         .fopen = (void *)0x0022EA5C,
         .fread = (void *)0x0016751C,
-        .fwrite = (void *)0x001675A4,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -103,7 +95,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BA24,
         .fopen = (void *)0x0022EA24,
         .fread = (void *)0x00167540,
-        .fwrite = (void *)0x001675C8,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -114,7 +105,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BA14,
         .fopen = (void *)0x0022F284,
         .fread = (void *)0x001680F8,
-        .fwrite = (void *)0x00168180,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -125,7 +115,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BA40,
         .fopen = (void *)0x0022FAC8,
         .fread = (void *)0x001686FC,
-        .fwrite = (void *)0x00168784,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -136,7 +125,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012B9F8,
         .fopen = (void *)0x0022FA8C,
         .fread = (void *)0x00168718,
-        .fwrite = (void *)0x001687A0,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -147,7 +135,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BA40,
         .fopen = (void *)0x0022F2D8,
         .fread = (void *)0x001680FC,
-        .fwrite = (void *)0x00168184,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -158,7 +145,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BA6C,
         .fopen = (void *)0x0022FB5C,
         .fread = (void *)0x00168744,
-        .fwrite = (void *)0x001687CC,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -169,7 +155,6 @@ static const struct app_offsets apps[] =
         .nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue = (void *)0x0012BA24,
         .fopen = (void *)0x0022FB20,
         .fread = (void *)0x00168760,
-        .fwrite = (void *)0x001687E8,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }
