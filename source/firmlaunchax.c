@@ -1,9 +1,9 @@
 #include "firmlaunchax.h"
 
+#include <stddef.h>
 #include <stdint.h>
 #include "firmcompat.h"
 #include "appcompat.h"
-#include "arm11_tools.h"
 #include "jump_table.h"
 
 static void invalidate_data_cache()
@@ -24,6 +24,20 @@ static void invalidate_instruction_cache()
         "mcr p15, 0, %0, c7, c5, 6\n\t"
         "mcr p15, 0, %0, c7, c10, 4"
         :: "r"(0));
+}
+
+static void *memcpy32(void *dst, const void *src, size_t n)
+{
+    const uint32_t *src32;
+    uint32_t *dst32;
+
+    src32 = src;
+    for (dst32 = dst; (uintptr_t)dst32 < (uintptr_t)dst + n; dst32++) {
+        *dst32 = *src32;
+        src32++;
+    }
+
+    return dst;
 }
 
 static void setup_gpu()
