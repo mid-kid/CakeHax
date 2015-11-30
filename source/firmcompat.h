@@ -5,6 +5,8 @@
 #include "appcompat.h"
 
 struct firmware_offsets {
+    uint32_t ver;
+
     uint32_t kernel_patch_address;
     uint32_t reboot_patch_address;
     uint32_t reboot_func_address;
@@ -17,7 +19,7 @@ struct firmware_offsets {
     uint32_t gpu_regs;
 };
 
-extern struct firmware_offsets *fw;
+extern const struct firmware_offsets *fw;
 
 int set_firmware_offsets();
 
