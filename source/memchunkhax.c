@@ -13,20 +13,15 @@ static void gspwn_copy(void *dest, void *src, uint32_t length, int check, int ch
     int *check_loc = (int *)(check_mem + check_offset);
 
     while(*check_loc != check) {
-        memcpy32(check_mem, check_mem, 0x10000);
         app->GSPGPU_FlushDataCache(src, length);
 
         uint32_t arr1[] = {4, (uint32_t)src, (uint32_t)dest, length,
                            0xFFFFFFFF, 0xFFFFFFFF, 8, 0};
         app->nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue((void *)app->gpuHandle, arr1);
 
-        app->GSPGPU_FlushDataCache(check_mem, 0x10);
-
         uint32_t arr2[] = {4, (uint32_t)dest, (uint32_t)check_mem, 0x10,
                            0xFFFFFFFF, 0xFFFFFFFF, 8, 0};
         app->nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue((void *)app->gpuHandle, arr2);
-
-        memcpy32(check_mem, check_mem, 0x10000);
     }
 }
 
