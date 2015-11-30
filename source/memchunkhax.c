@@ -18,7 +18,7 @@ static void gspwn_copy(void *dest, void *src, uint32_t length, int check, int ch
                            0xFFFFFFFF, 0xFFFFFFFF, 8, 0};
         app->nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue((void *)app->gpuHandle, arr1);
 
-        uint32_t arr2[] = {4, (uint32_t)dest, (uint32_t)check_mem, 0x10,
+        uint32_t arr2[] = {4, (uint32_t)dest, (uint32_t)check_mem, check_offset + 4,
                            0xFFFFFFFF, 0xFFFFFFFF, 8, 0};
         app->nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue((void *)app->gpuHandle, arr2);
     }
