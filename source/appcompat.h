@@ -15,10 +15,6 @@ struct app_offsets
     int (*fwrite)(uint32_t (*handle)[], uint32_t *written, void *src, uint32_t size);
 
     uint32_t gpuHandle;
-
-#if defined(ENTRY_SPIDER)
-    int (*GX_SetTextureCopy)(void *input_buffer, void *output_buffer, uint32_t size, int in_x, int in_y, int out_x, int out_y, int flags);
-#endif
 };
 
 extern const struct app_offsets *app;

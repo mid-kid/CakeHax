@@ -120,14 +120,6 @@ int set_firmware_offsets()
             default:
                 return 1;
         }
-
-#ifdef ENTRY_MSET
-        if (kernel_version < 0x02230600) {  // Firm 4.x
-            fw->app_code_offset = 0x03E6D000;
-        } else {  // > Firm 4.x
-            fw->app_code_offset = 0x03F00000;
-        }
-#endif
     } else {
         switch (kernel_version) {
             case 0x022E0000:  // N3DS 9.0.0
@@ -159,10 +151,6 @@ int set_firmware_offsets()
             default:
                 return 1;
         }
-
-#ifdef ENTRY_MSET
-        fw->app_code_offset = 0x7B00000;
-#endif
     }
 
     return 0;

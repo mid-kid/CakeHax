@@ -39,8 +39,6 @@ static const struct app_offsets apps[] =
         .fread = (void *)0x002FC8E4,
         .fwrite = (void *)0x00311D90,
 
-        .GX_SetTextureCopy = (void *)0x002C62E4,
-
         .gpuHandle = (0x003F54E8 + 0x58)
     }, {
         // 5.x
@@ -51,8 +49,6 @@ static const struct app_offsets apps[] =
         .fopen = (void *)0x0022FE44,
         .fread = (void *)0x001686C0,
         .fwrite = (void *)0x00168748,
-
-        .GX_SetTextureCopy = (void *)0x0011DD80,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -65,8 +61,6 @@ static const struct app_offsets apps[] =
         .fread = (void *)0x001686DC,
         .fwrite = (void *)0x00168764,
 
-        .GX_SetTextureCopy = (void *)0x0011DD48,
-
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
         // 4.2 CN
@@ -77,8 +71,6 @@ static const struct app_offsets apps[] =
         .fopen = (void *)0x0022E334,
         .fread = (void *)0x001674BC,
         .fwrite = (void *)0x00167544,
-
-        .GX_SetTextureCopy = (void *)0x0011DD48,
 
         .gpuHandle = (0x003D6C40 + 0x58)
     }, {
@@ -91,8 +83,6 @@ static const struct app_offsets apps[] =
         .fread = (void *)0x00166FC8,
         .fwrite = (void *)0x00167050,
 
-        .GX_SetTextureCopy = (void *)0x0011DD68,
-
         .gpuHandle = (0x003D6C40 + 0x58)
     }, {
         // 5.x CN
@@ -103,8 +93,6 @@ static const struct app_offsets apps[] =
         .fopen = (void *)0x0022EA5C,
         .fread = (void *)0x0016751C,
         .fwrite = (void *)0x001675A4,
-
-        .GX_SetTextureCopy = (void *)0x0011DD80,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -117,8 +105,6 @@ static const struct app_offsets apps[] =
         .fread = (void *)0x00167540,
         .fwrite = (void *)0x001675C8,
 
-        .GX_SetTextureCopy = (void *)0x0011DD48,
-
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
         // 4.x KR
@@ -129,8 +115,6 @@ static const struct app_offsets apps[] =
         .fopen = (void *)0x0022F284,
         .fread = (void *)0x001680F8,
         .fwrite = (void *)0x00168180,
-
-        .GX_SetTextureCopy = (void *)0x0011DD48,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -143,8 +127,6 @@ static const struct app_offsets apps[] =
         .fread = (void *)0x001686FC,
         .fwrite = (void *)0x00168784,
 
-        .GX_SetTextureCopy = (void *)0x0011DD80,
-
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
         // 9.x KR
@@ -155,8 +137,6 @@ static const struct app_offsets apps[] =
         .fopen = (void *)0x0022FA8C,
         .fread = (void *)0x00168718,
         .fwrite = (void *)0x001687A0,
-
-        .GX_SetTextureCopy = (void *)0x0011DD48,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
@@ -169,8 +149,6 @@ static const struct app_offsets apps[] =
         .fread = (void *)0x001680FC,
         .fwrite = (void *)0x00168184,
 
-        .GX_SetTextureCopy = (void *)0x0011DD48,
-
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
         // 5.x TW
@@ -182,8 +160,6 @@ static const struct app_offsets apps[] =
         .fread = (void *)0x00168744,
         .fwrite = (void *)0x001687CC,
 
-        .GX_SetTextureCopy = (void *)0x0011DD80,
-
         .gpuHandle = (0x003D7C40 + 0x58)
     }, {
         // 9.x TW
@@ -194,8 +170,6 @@ static const struct app_offsets apps[] =
         .fopen = (void *)0x0022FB20,
         .fread = (void *)0x00168760,
         .fwrite = (void *)0x001687E8,
-
-        .GX_SetTextureCopy = (void *)0x0011DD48,
 
         .gpuHandle = (0x003D7C40 + 0x58)
     }
