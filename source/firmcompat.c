@@ -18,9 +18,7 @@ static const struct firmware_offsets ctr[] = {
         .fcram_address = 0xF0000000,
         .func_patch_address = 0xEFFE4DD4,
         .func_patch_return = 0xFFF84DDC,
-        .pdn_regs = 0xFFFD0000,
-        .pxi_regs = 0xFFFD2000,
-        .gpu_regs = 0xFFFCE000
+        .regs = 0xFFFCE000
     }, {
         // 2.35-6 5.0.0
         .ver = 0x02230600,
@@ -32,9 +30,7 @@ static const struct firmware_offsets ctr[] = {
         .fcram_address = 0xF0000000,
         .func_patch_address = 0xEFFE55BC,
         .func_patch_return = 0xFFF765C4,
-        .pdn_regs = 0xFFFD0000,
-        .pxi_regs = 0xFFFD2000,
-        .gpu_regs = 0xFFFCE000
+        .regs = 0xFFFCE000
     }, {
         // 2.36-0 5.1.0
         .ver = 0x02240000,
@@ -42,13 +38,11 @@ static const struct firmware_offsets ctr[] = {
         .reboot_func_address = 0xFFF64B90,
         .func_patch_address = 0xEFFE55B8,
         .func_patch_return = 0xFFF765C0,
-        .pdn_regs = 0xFFFD0000,
-        .pxi_regs = 0xFFFD2000,
         .kernel_patch_address = 0xEFF8372B,
         .reboot_patch_address = 0xEFFF4978,
         .jump_table_address = 0xEFFF4C80,
         .fcram_address = 0xF0000000,
-        .gpu_regs = 0xFFFCE000
+        .regs = 0xFFFCE000
     }, {
         // 2.37-0 6.0.0
         .ver = 0x02250000,
@@ -58,11 +52,9 @@ static const struct firmware_offsets ctr[] = {
         .reboot_func_address = 0xFFF64A78,
         .func_patch_address = 0xEFFE5AE8,
         .func_patch_return = 0xFFF76AF0,
-        .pdn_regs = 0xFFFD0000,
-        .pxi_regs = 0xFFFD2000,
         .jump_table_address = 0xEFFF4C80,
         .fcram_address = 0xF0000000,
-        .gpu_regs = 0xFFFCE000
+        .regs = 0xFFFCE000
     }, {
         // 2.38-0 6.1.0
         .ver = 0x02260000,
@@ -72,11 +64,9 @@ static const struct firmware_offsets ctr[] = {
         .reboot_func_address = 0xFFF64A78,
         .func_patch_address = 0xEFFE5AE8,
         .func_patch_return = 0xFFF76AF0,
-        .pdn_regs = 0xFFFD0000,
-        .pxi_regs = 0xFFFD2000,
         .jump_table_address = 0xEFFF4C80,
         .fcram_address = 0xF0000000,
-        .gpu_regs = 0xFFFCE000
+        .regs = 0xFFFCE000
     }, {
         // 2.39-4 7.0.0
         .ver = 0x02270400,
@@ -88,9 +78,7 @@ static const struct firmware_offsets ctr[] = {
         .fcram_address = 0xF0000000,
         .func_patch_address = 0xEFFE5B34,
         .func_patch_return = 0xFFF76B3C,
-        .pdn_regs = 0xFFFD0000,
-        .pxi_regs = 0xFFFD2000,
-        .gpu_regs = 0xFFFCE000
+        .regs = 0xFFFCE000
     }, {
         // 2.40-0 7.2.0
         .ver = 0x02280000,
@@ -102,9 +90,7 @@ static const struct firmware_offsets ctr[] = {
         .fcram_address = 0xF0000000,
         .func_patch_address = 0xEFFE5B30,
         .func_patch_return = 0xFFF76B38,
-        .pdn_regs = 0xFFFD0000,
-        .pxi_regs = 0xFFFD2000,
-        .gpu_regs = 0xFFFCE000
+        .regs = 0xFFFCE000
     }, {
         // 2.44-6 8.0.0
         .ver = 0x022C0600,
@@ -116,9 +102,7 @@ static const struct firmware_offsets ctr[] = {
         .fcram_address = 0xE0000000,
         .func_patch_address = 0xDFFE4F28,
         .func_patch_return = 0xFFF66F30,
-        .pdn_regs = 0xFFFBE000,
-        .pxi_regs = 0xFFFC0000,
-        .gpu_regs = 0xFFFBC000
+        .regs = 0xFFFBC000
     }, {
         // 2.26-0 9.0.0
         .ver = 0x022E0000,
@@ -130,9 +114,7 @@ static const struct firmware_offsets ctr[] = {
         .fcram_address = 0xE0000000,
         .func_patch_address = 0xDFFE59D0,
         .func_patch_return = 0xFFF279D8,
-        .pdn_regs = 0xFFFC2000,
-        .pxi_regs = 0xFFFC4000,
-        .gpu_regs = 0xFFFC0000
+        .regs = 0xFFFC0000
     }
 };
 
@@ -148,9 +130,7 @@ static const struct firmware_offsets ktr[] = {
         .fcram_address = 0xE0000000,
         .func_patch_address = 0xDFFE7A50,
         .func_patch_return = 0xFFF28A58,
-        .pdn_regs = 0xFFFBE000,
-        .pxi_regs = 0xFFFC0000,
-        .gpu_regs = 0xFFFBC000
+        .regs = 0xFFFBC000
     }, {
         // N3DS 8.0.0
         .ver = 0x022C0600,
@@ -162,9 +142,7 @@ static const struct firmware_offsets ktr[] = {
         .fcram_address = 0xE0000000,
         .func_patch_address = 0xDFFE7A50,
         .func_patch_return = 0xFFF28A58,
-        .pdn_regs = 0xFFFBE000,
-        .pxi_regs = 0xFFFC0000,
-        .gpu_regs = 0xFFFBC000
+        .regs = 0xFFFBC000
     }
 };
 
