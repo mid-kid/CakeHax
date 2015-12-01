@@ -6,24 +6,14 @@
 #include "appcompat.h"
 #include "jump_table.h"
 
-static void invalidate_data_cache()
+static void clean(uintptr_t p)
 {
-    __asm__ volatile (
-        // Clean and Invalidate Entire Data Cache
-        "mcr p15, 0, %0, c7, c14, 0\n\t"
-        // Data Synchronization Barrier
-        "mcr p15, 0, %0, c7, c10, 4"
-        :: "r"(0));
+    __asm__ volatile ("mcr p15, 0, %0, c7, c10, 1" :: "r"(p));
 }
 
-static void invalidate_instruction_cache()
+static void dsb()
 {
-    __asm__ volatile (
-        "mcr p15, 0, %0, c7, c5, 0\n\t"
-        "mcr p15, 0, %0, c7, c5, 4\n\t"
-        "mcr p15, 0, %0, c7, c5, 6\n\t"
-        "mcr p15, 0, %0, c7, c10, 4"
-        :: "r"(0));
+    __asm__ volatile ("mcr p15, 0, %0, c7, c10, 4" :: "r"(0));
 }
 
 static void *memcpy32(void *dst, const void *src, size_t n)
@@ -69,8 +59,7 @@ static void setup_gpu()
 
 void firmlaunch_arm9hax()
 {
-    invalidate_data_cache();
-    invalidate_instruction_cache();
+    uintptr_t p;
 
     // Copy arm9 code
     uint32_t code_offset = 0x3F00000;
@@ -81,7 +70,7 @@ void firmlaunch_arm9hax()
     setup_gpu();
 
     // Copy the jump table
-    memcpy32((void *)fw->jump_table_address, &jump_table, (&jump_table_end - &jump_table + 1) * 4);
+    memcpy32((void *)fw->jump_table_address, &jump_table, (size_t)&jump_table_size);
 
     // Write firmware-specific offsets to the jump table
     *(uint32_t *)(fw->jump_table_address +
@@ -95,7 +84,16 @@ void firmlaunch_arm9hax()
     *(uint32_t *)fw->reboot_patch_address = 0xE51FF004;
     *(uint32_t *)(fw->reboot_patch_address + 4) = 0x1FFF4C80+4;
 
-    invalidate_data_cache();
+    for (p = fw->jump_table_address;
+         p < fw->jump_table_address + (size_t)&jump_table_size;
+         p += 32)
+    {
+        clean(p);
+    }
+
+    clean(fw->func_patch_address);
+    clean(fw->reboot_patch_address);
+    dsb();
 
     // Trigger reboot
     ((void (*)())fw->reboot_func_address)(0, 0, 2, 0);

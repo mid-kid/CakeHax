@@ -148,5 +148,5 @@ jt_regs: .long 0
 .global jt_return
 jt_return: .long 0
 
-.global jump_table_end
-jump_table_end:
+.global jump_table_size
+jump_table_size = . - jump_table
