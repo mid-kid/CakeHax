@@ -1,5 +1,5 @@
-#ifndef __firmlaunchax_h__
-#define __firmlaunchax_h__
+#ifndef firmlaunchax_h
+#define firmlaunchax_h
 
 void firmlaunch_arm9hax();
 

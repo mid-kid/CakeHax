@@ -1,5 +1,5 @@
-#ifndef __jump_table_h__
-#define __jump_table_h__
+#ifndef jump_table_h
+#define jump_table_h
 
 extern void *jump_table __asm__("jump_table");
 extern void *jump_table_size __asm__("jump_table_size");

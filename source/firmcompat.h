@@ -1,5 +1,5 @@
-#ifndef __firmcompat_h__
-#define __firmcompat_h__
+#ifndef firmcompat_h
+#define firmcompat_h
 
 #include <stdint.h>
 #include "appcompat.h"

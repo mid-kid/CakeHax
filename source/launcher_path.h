@@ -1,5 +1,5 @@
-#ifndef __launcher_path_h__
-#define __launcher_path_h__
+#ifndef launcher_path_h
+#define launcher_path_h
 
 // This is a stupid file which just makes sure LAUNCHER_PATH is defined
 // It should be defined externally, though.

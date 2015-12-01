@@ -1,5 +1,5 @@
-#ifndef __memchunkhax_h__
-#define __memchunkhax_h__
+#ifndef memchunkhax_h
+#define memchunkhax_h
 
 void __attribute__((noreturn)) memchunk_arm11hax(void (*func)());
 

@@ -1,5 +1,5 @@
-#ifndef __appcompat_h__
-#define __appcompat_h__
+#ifndef appcompat_h
+#define appcompat_h
 
 #include <stdint.h>
 #include "launcher_path.h"
