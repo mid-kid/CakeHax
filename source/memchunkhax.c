@@ -24,17 +24,6 @@ static void gspwn_copy(void *dest, void *src, uint32_t length, int check, int ch
     }
 }
 
-#if defined(ENTRY_MSET)
-static void build_nop_slide(uint32_t *dest, unsigned int len)
-{
-    unsigned int i;
-    for (i = 0; i < len; i++) {
-        dest[i] = 0xE1A00000;  // ARM instruction: nop
-    }
-    dest[i - 1] = 0xE12FFF1E;  // ARM instruction: bx lr
-}
-#endif
-
 static int svcControlMemory(void **out, void *p1, void *p2, size_t n,
 	unsigned int op, unsigned int perm)
 {
