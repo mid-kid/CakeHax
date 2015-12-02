@@ -3,8 +3,8 @@
 .code 32
 .text
 
-.global jump_table
-jump_table:
+.global _start
+_start:
     b func_patch_hook
     b reboot_function
 
@@ -143,10 +143,9 @@ pxi_recv:
     ldr r0, [r0,#0xC]
     bx lr
 
-.global jt_regs
-jt_regs: .long 0
-.global jt_return
-jt_return: .long 0
+.pool
 
-.global jump_table_size
-jump_table_size = . - jump_table
+jt_ctx:
+
+jt_return = jt_ctx
+jt_regs = jt_ctx + 4

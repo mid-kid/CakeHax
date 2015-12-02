@@ -39,6 +39,4 @@ int set_app_offsets();
 #define APP_ARM11_BUFFER (APP_FCRAM_ADDR + 0x2000)
 #define APP_MEM_HAX_MEM (APP_FCRAM_ADDR + 0x50000)
 
-#define ARM9_PAYLOAD_MAXSIZE 0x10000
-
 #endif

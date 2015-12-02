@@ -39,11 +39,9 @@ void __attribute__((noreturn, section(".text.start"), used)) _start()
     // Some offsets differ per firmware
     set_firmware_offsets();
 
-    // Load the arm9 payload to memory
-    // Spider has size restrictions to the Launcher, so we need to load the arm9
-    //   payload separately.
-    load_file((char *)(0x14000000 + APP_CFW_OFFSET),
-                       APP_LAUNCHER_PATH, 0x12000, ARM9_PAYLOAD_MAXSIZE);
+    // Load the payload to memory
+    load_file((char *)(0x14000000 + APP_CFW_OFFSET), APP_LAUNCHER_PATH,
+              0x12000, PAYLOAD_TABLE_SIZE + PAYLOAD_ARM9_SIZE);
 
     // Now, we gain arm11 kernel mode
     memchunk_arm11hax(arm11_kernel_code);

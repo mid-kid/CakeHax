@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include "fatfs/ff.h"
 #include "fatfs/sdmmc/sdmmc.h"
-#include "../launcher_path.h"
+#include "../../launcher_path.h"
 
 void *payload_loc = (void *)0x08000000;
 unsigned int payload_offset = 0x14000;

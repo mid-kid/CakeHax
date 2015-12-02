@@ -4,7 +4,10 @@
 #include <stdint.h>
 #include "firmcompat.h"
 #include "appcompat.h"
-#include "jump_table.h"
+
+#if PAYLOAD_ARM9_SIZE > 0x10000
+#error PAYLOAD_ARM9_SIZE is too large. This is the restriction of hooks.
+#endif
 
 static void clean(uintptr_t p)
 {
@@ -59,24 +62,24 @@ static void setup_gpu()
 
 void firmlaunch_arm9hax()
 {
-    uintptr_t p;
+    uintptr_t p, payload;
 
+    payload = fw->fcram_address + APP_CFW_OFFSET;
     // Copy arm9 code
     uint32_t code_offset = 0x3F00000;
     memcpy32((void *)(fw->fcram_address + code_offset),
-               (void *)(fw->fcram_address + APP_CFW_OFFSET), ARM9_PAYLOAD_MAXSIZE);
+             (void *)(payload + PAYLOAD_TABLE_SIZE),
+             PAYLOAD_ARM9_SIZE);
 
     // Prepare framebuffer info for arm9
     setup_gpu();
 
     // Copy the jump table
-    memcpy32((void *)fw->jump_table_address, &jump_table, (size_t)&jump_table_size);
+    memcpy32((void *)fw->jump_table_address, (void *)payload, PAYLOAD_TABLE_SIZE);
 
     // Write firmware-specific offsets to the jump table
-    *(uint32_t *)(fw->jump_table_address +
-                 (&jt_return - &jump_table) * 4) = fw->func_patch_return;
-    *(uint32_t *)(fw->jump_table_address +
-                 (&jt_regs - &jump_table) * 4) = fw->regs;
+    *(uint32_t *)(fw->jump_table_address + PAYLOAD_TABLE_SIZE) = fw->func_patch_return;
+    *(uint32_t *)(fw->jump_table_address + PAYLOAD_TABLE_SIZE + 4) = fw->regs;
 
     // Patch arm11 functions
     *(uint32_t *)fw->func_patch_address = 0xE51FF004;
@@ -85,7 +88,7 @@ void firmlaunch_arm9hax()
     *(uint32_t *)(fw->reboot_patch_address + 4) = 0x1FFF4C80+4;
 
     for (p = fw->jump_table_address;
-         p < fw->jump_table_address + (size_t)&jump_table_size;
+         p < fw->jump_table_address + PAYLOAD_TABLE_SIZE;
          p += 32)
     {
         clean(p);
