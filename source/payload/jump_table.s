@@ -1,10 +1,14 @@
+@ This Source Code Form is subject to the terms of the Mozilla Public
+@ License, v. 2.0. If a copy of the MPL was not distributed with this
+@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 .arm
 .align 4
 .code 32
 .text
 
-.global jump_table
-jump_table:
+.global _start
+_start:
     b func_patch_hook
     b reboot_function
 
@@ -21,7 +25,8 @@ func_patch_hook:
     bl pxi_recv
     bl pxi_recv
 
-    ldr r1, jt_pdn_regs
+    ldr r1, jt_regs
+    add r1, #0x2000
     mov r0, #2
     strb r0, [r1, #0x230]
     mov r0, #0x10
@@ -115,7 +120,8 @@ busy_spin:
     bx lr
 
 pxi_send:
-    ldr r1, jt_pxi_regs
+    ldr r1, jt_regs
+    add r1, #0x4000
     pxi_send_l1:
         ldrh r2, [r1,#4]
         tst r2, #2
@@ -124,14 +130,16 @@ pxi_send:
     bx lr
 
 pxi_sync:
-    ldr r0, jt_pxi_regs
+    ldr r0, jt_regs
+    add r0, #0x4000
     ldrb r1, [r0,#3]
     orr r1, #0x40
     strb r1, [r0,#3]
     bx lr
 
 pxi_recv:
-    ldr r0, jt_pxi_regs
+    ldr r0, jt_regs
+    add r0, #0x4000
     pxi_recv_l1:
         ldrh r1, [r0,#4]
         tst r1, #0x100
@@ -139,12 +147,9 @@ pxi_recv:
     ldr r0, [r0,#0xC]
     bx lr
 
-.global jt_pdn_regs
-jt_pdn_regs: .long 0
-.global jt_pxi_regs
-jt_pxi_regs: .long 0
-.global jt_return
-jt_return: .long 0
+.pool
 
-.global jump_table_end
-jump_table_end:
+jt_ctx:
+
+jt_return = jt_ctx
+jt_regs = jt_ctx + 4
