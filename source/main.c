@@ -4,9 +4,17 @@
 #include "memchunkhax.h"
 #include "firmlaunchax.h"
 
+void memset(void *dest, int filler, uint32_t size)
+{
+    char *destc = (char *)dest;
+    for (uint32_t i = 0; i < size; i++) {
+        destc[i] = filler;
+    }
+}
+
 int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t size)
 {
-    uint32_t file_handle[8] = {0};
+    uint32_t file_handle[8] = {0};  // This optimizes to memset
     uint32_t bytes_read = 0;
 
     int result = app->fopen(&file_handle, path, 1);

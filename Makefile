@@ -99,7 +99,7 @@ $(dir_build)/payload/fatfs/%.o: $(dir_source)/payload/fatfs/%.c
 $(dir_build)/payload/fatfs/%.o: $(dir_source)/payload/fatfs/%.s
 	@mkdir -p "$(@D)"
 	$(COMPILE.s) -mthumb -mthumb-interwork $(OUTPUT_OPTION) $<
-	
+
 $(dir_build)/payload/%.o: $(dir_source)/payload/%.c
 	@mkdir -p "$(@D)"
 	$(COMPILE.c) $(OUTPUT_OPTION) $<
