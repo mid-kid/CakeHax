@@ -4,23 +4,13 @@
 #include "memchunkhax.h"
 #include "firmlaunchax.h"
 
-void memset(void *dest, int filler, uint32_t size)
-{
-    char *destc = (char *)dest;
-    for (uint32_t i = 0; i < size; i++) {
-        destc[i] = filler;
-    }
-}
-
-int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t size)
+static int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t size)
 {
     uint32_t file_handle[8] = {0};  // This optimizes to memset
     uint32_t bytes_read = 0;
 
     int result = app->fopen(&file_handle, path, 1);
-    if (result != 0) {
-        return 1;
-    }
+    if (result != 0) return result;
     file_handle[1] = offset;
 
     app->fread(&file_handle, &bytes_read, dest, size);
@@ -29,7 +19,7 @@ int load_file(char *dest, short unsigned int *path, uint32_t offset, uint32_t si
 }
 
 __attribute__((naked))
-void arm11_kernel_code()
+static void arm11_kernel_code()
 {
     __asm__ volatile ("clrex");
 

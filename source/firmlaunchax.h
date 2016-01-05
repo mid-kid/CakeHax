@@ -1,6 +1,3 @@
-#ifndef __firmlaunchax_h__
-#define __firmlaunchax_h__
+#pragma once
 
 void firmlaunch_arm9hax();
-
-#endif

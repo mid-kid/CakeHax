@@ -21,7 +21,8 @@ func_patch_hook:
     bl pxi_recv
     bl pxi_recv
 
-    ldr r1, jt_pdn_regs
+    ldr r1, jt_registers
+    add r1, #0x2000  // pdn registers
     mov r0, #2
     strb r0, [r1, #0x230]
     mov r0, #0x10
@@ -115,7 +116,8 @@ busy_spin:
     bx lr
 
 pxi_send:
-    ldr r1, jt_pxi_regs
+    ldr r1, jt_registers
+    add r1, #0x4000  // pxi registers
     pxi_send_l1:
         ldrh r2, [r1,#4]
         tst r2, #2
@@ -124,14 +126,16 @@ pxi_send:
     bx lr
 
 pxi_sync:
-    ldr r0, jt_pxi_regs
+    ldr r0, jt_registers
+    add r0, #0x4000  // pxi registers
     ldrb r1, [r0,#3]
     orr r1, #0x40
     strb r1, [r0,#3]
     bx lr
 
 pxi_recv:
-    ldr r0, jt_pxi_regs
+    ldr r0, jt_registers
+    add r0, #0x4000  // pxi registers
     pxi_recv_l1:
         ldrh r1, [r0,#4]
         tst r1, #0x100
@@ -139,10 +143,8 @@ pxi_recv:
     ldr r0, [r0,#0xC]
     bx lr
 
-.global jt_pdn_regs
-jt_pdn_regs: .long 0
-.global jt_pxi_regs
-jt_pxi_regs: .long 0
+.global jt_registers
+jt_registers: .long 0
 .global jt_return
 jt_return: .long 0
 

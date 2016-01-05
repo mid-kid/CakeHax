@@ -18,6 +18,7 @@ ARM9FLAGS := -mcpu=arm946e-s -march=armv5te
 ARM11FLAGS := -mcpu=mpcore
 ASFLAGS := -mlittle-endian
 CFLAGS := -marm $(ASFLAGS) -O2 -std=c11 -MMD -MP -fno-builtin -fshort-wchar -Wall -Wextra -Wno-main -DLAUNCHER_PATH='"$(filepath)$(name)"'
+LDFLAGS := -nostartfiles -flto -fwhole-program
 
 get_objects = $(patsubst $(dir_source)/%.s, $(dir_build)/%.o, \
 			  $(patsubst $(dir_source)/%.c, $(dir_build)/%.o, $1))
@@ -77,19 +78,18 @@ $(dir_build)/%/main.bin: $(dir_build)/%/main.elf
 $(dir_build)/payload/main.elf: ASFLAGS := $(ARM9FLAGS) $(ASFLAGS)
 $(dir_build)/payload/main.elf: CFLAGS := $(ARM9FLAGS) $(CFLAGS)
 $(dir_build)/payload/main.elf: $(objects_payload)
-	# FatFs requires libgcc for __aeabi_uidiv
-	$(CC) -nostartfiles $(LDFLAGS) -T linker_payload.ld $(OUTPUT_OPTION) $^
+	$(LINK.o) -T linker_payload.ld $(OUTPUT_OPTION) $^
 
 # The arm11 payloads
 $(dir_build)/%/main.elf: ASFLAGS := $(ARM11FLAGS) $(ASFLAGS)
 
 $(dir_build)/mset/main.elf: CFLAGS := -DENTRY_MSET $(ARM11FLAGS) $(CFLAGS)
 $(dir_build)/mset/main.elf: $(patsubst $(dir_build)/%, $(dir_build)/mset/%, $(objects))
-	$(LD) $(LDFLAGS) -T linker_mset.ld $(OUTPUT_OPTION) $^
+	$(LINK.o) -T linker_mset.ld $(OUTPUT_OPTION) $^
 
 $(dir_build)/spider/main.elf: CFLAGS := -DENTRY_SPIDER $(ARM11FLAGS) $(CFLAGS)
 $(dir_build)/spider/main.elf: $(patsubst $(dir_build)/%, $(dir_build)/spider/%, $(objects))
-	$(LD) $(LDFLAGS) -T linker_spider.ld $(OUTPUT_OPTION) $^
+	$(LINK.o) -T linker_spider.ld $(OUTPUT_OPTION) $^
 
 # Fatfs requires to be built in thumb
 $(dir_build)/payload/fatfs/%.o: $(dir_source)/payload/fatfs/%.c

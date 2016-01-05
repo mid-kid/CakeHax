@@ -1,5 +1,4 @@
-#ifndef __firmcompat_h__
-#define __firmcompat_h__
+#pragma once
 
 #include <stdint.h>
 #include "appcompat.h"
@@ -12,9 +11,7 @@ struct firmware_offsets {
     uint32_t fcram_address;
     uint32_t func_patch_address;
     uint32_t func_patch_return;
-    uint32_t pdn_regs;
-    uint32_t pxi_regs;
-    uint32_t gpu_regs;
+    uint32_t registers;
 #ifdef ENTRY_MSET
     uint32_t app_code_offset;
 #endif
@@ -23,5 +20,3 @@ struct firmware_offsets {
 extern struct firmware_offsets *fw;
 
 int set_firmware_offsets();
-
-#endif

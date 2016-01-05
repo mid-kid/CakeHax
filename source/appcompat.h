@@ -1,15 +1,14 @@
-#ifndef __appcompat_h__
-#define __appcompat_h__
+#pragma once
 
 #include <stdint.h>
 #include "launcher_path.h"
 
 struct app_offsets
 {
-    void (*memcpy)(void *dest, void *src, uint32_t len);
+    uint32_t spec;
+
     int (*GSPGPU_FlushDataCache)(void *address, uint32_t length);
     void (*nn__gxlow__CTR__CmdReqQueueTx__TryEnqueue)(void *arg1, void *arg2);
-    uint32_t (*svcControlMemory)(uint32_t *outaddr, uint32_t *addr0, uint32_t *addr1, uint32_t size, uint32_t operation, uint32_t permissions);
     int (*fopen)(uint32_t (*handle)[], short unsigned int *path, int flags);
     int (*fread)(uint32_t (*handle)[], uint32_t *read, void *buffer, uint32_t size);
     int (*fwrite)(uint32_t (*handle)[], uint32_t *written, void *src, uint32_t size);
@@ -18,7 +17,6 @@ struct app_offsets
 
 #if defined(ENTRY_SPIDER)
     int (*GX_SetTextureCopy)(void *input_buffer, void *output_buffer, uint32_t size, int in_x, int in_y, int out_x, int out_y, int flags);
-    int (*svcSleepThread)(unsigned long long nanoseconds);
 #endif
 };
 
@@ -48,5 +46,3 @@ int set_app_offsets();
 #define APP_FIRM_COMPAT (APP_FCRAM_ADDR + 0x20100)
 
 #define ARM9_PAYLOAD_MAXSIZE 0x10000
-
-#endif

@@ -14,14 +14,17 @@ invalidate_instruction_cache:
     mcr p15, 0, r0, c7, c10, 4
     bx lr
 
-.global asm_memcpy
-asm_memcpy:
-    add r2, r1
+.global svcControlMemory
+svcControlMemory:
+    push {r0}
+    ldr r0, [sp, #4]
+    ldr r4, [sp, #8]
+    svc 0x01
+    pop {r2}
+    str r1, [r2]
+    bx lr
 
-    .memcpy_loop:
-        ldmia r1!, {r3}
-        stmia r0!, {r3}
-        cmp r1, r2
-        bcc .memcpy_loop
-
+.global svcSleepThread
+svcSleepThread:
+    svc 0x0A
     bx lr

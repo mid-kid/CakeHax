@@ -67,6 +67,18 @@ void main()
     *(uint32_t *)0x080FFFD8 = 0;
     *(uint32_t *)0x080FFFDC = 0;
 
+    // Drain write buffer
+    __asm__ volatile ("mcr p15, 0, %0, c7, c10, 4\n" :: "r"(0));
+    for (p = (uintptr_t)payload_loc; p < (uintptr_t)payload_loc + payload_size; p += 32) {
+        __asm__ volatile (
+                // Clean data cache
+                "mcr p15, 0, %0, c7, c10, 1\n"
+                // Flush instruction cache
+                "mcr p15, 0, %0, c7, c5, 1\n"
+                :: "r"(p)
+        );
+    }
+
     // Loaded correctly. The rest is up to the payload.
     clear_screens();
 
