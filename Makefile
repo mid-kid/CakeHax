@@ -5,10 +5,14 @@ name ?= Cakes.dat
 filepath ?=
 dir_out ?= .
 
-CC := arm-none-eabi-gcc
-AS := arm-none-eabi-as
-LD := arm-none-eabi-ld
-OC := arm-none-eabi-objcopy
+ifeq ($(strip $(DEVKITARM)),)
+$(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
+endif
+
+CC := $(DEVKITARM)/bin/arm-none-eabi-gcc
+AS := $(DEVKITARM)/bin/arm-none-eabi-as
+LD := $(DEVKITARM)/bin/arm-none-eabi-ld
+OC := $(DEVKITARM)/bin/arm-none-eabi-objcopy
 
 dir_source := source
 dir_build := build
