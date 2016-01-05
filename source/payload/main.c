@@ -69,6 +69,7 @@ void main()
 
     // Drain write buffer
     __asm__ volatile ("mcr p15, 0, %0, c7, c10, 4\n" :: "r"(0));
+    uintptr_t p;
     for (p = (uintptr_t)payload_loc; p < (uintptr_t)payload_loc + payload_size; p += 32) {
         __asm__ volatile (
                 // Clean data cache
