@@ -16,12 +16,13 @@ invalidate_instruction_cache:
 
 .global svcControlMemory
 svcControlMemory:
-    push {r0}
-    ldr r0, [sp, #4]
-    ldr r4, [sp, #8]
+    push {r0,r4}
+    ldr r0, [sp,#8]
+    ldr r4, [sp,#12]
     svc 0x01
-    pop {r2}
+    ldr r2, [sp], #4
     str r1, [r2]
+    ldr r4, [sp], #4
     bx lr
 
 .global svcSleepThread
