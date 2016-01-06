@@ -2,7 +2,7 @@
 .align 4
 .global _start
 _start:
-    b main
+    bl main
 
     hang:
         b hang
