@@ -8,12 +8,12 @@ _start:
     @ Sets MPU permissions and cache settings
     ldr r0, =0xFFFF001D			@ ffff0000 32k
     ldr r1, =0x01FF801D			@ 01ff8000 32k
-    ldr r2, =0x08000027			@ 08000000 1M
+    ldr r2, =0x08000027			@ 08000000 1m
     ldr r3, =0x10000021			@ 10000000 128k
     ldr r4, =0x10100025			@ 10100000 512k
-    ldr r5, =0x20000035			@ 20000000 128M
+    ldr r5, =0x20000035			@ 20000000 128m
     ldr r6, =0x2800801B			@ 28008000 16k
-    ldr r7, =0x1800002D			@ 18000000 8M
+    ldr r7, =0x1800002D			@ 18000000 8m
     ldr r8, =0x33333336
     ldr r9, =0x60600666
     mov r10, #0x25
