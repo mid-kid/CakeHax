@@ -21,8 +21,8 @@ dir_rop3ds := rop3ds
 ARM9FLAGS := -mcpu=arm946e-s -march=armv5te
 ARM11FLAGS := -mcpu=mpcore
 ASFLAGS := -mlittle-endian
-CFLAGS := -marm $(ASFLAGS) -O2 -std=c11 -MMD -MP -fno-builtin -fshort-wchar -Wall -Wextra -Wno-main -DLAUNCHER_PATH='"$(filepath)$(name)"'
-LDFLAGS := -nostartfiles -flto -fwhole-program
+LDFLAGS := -nostdlib -flto -fwhole-program -fno-builtin -fshort-wchar
+CFLAGS := $(ASFLAGS) $(LDFLAGS) -marm -O2 -std=c11 -MMD -MP -Wall -Wextra -Wno-main -DLAUNCHER_PATH='"$(filepath)$(name)"'
 
 get_objects = $(patsubst $(dir_source)/%.s, $(dir_build)/%.o, \
 			  $(patsubst $(dir_source)/%.c, $(dir_build)/%.o, $1))
@@ -58,7 +58,8 @@ $(dir_build)/bigpayload.built: $(dir_out)/$(name) $(dir_build)/payload/main.bin
 	@touch $@
 
 # Throw everything together
-$(dir_out)/$(name): $(rops) $(dir_build)/mset/main.bin $(dir_build)/spider/main.bin
+$(dir_out)/$(name): $(dir_build)/mset/main.bin $(dir_build)/spider/main.bin
+	@$(MAKE) -s -j1 $(rops)  # These can't be built in parallel...
 	touch $@
 	dd if=$(dir_build)/spider/main.bin of=$@ bs=512 seek=0
 	dd if=$(dir_build)/mset_4x/rop.dat of=$@ bs=512 seek=32
