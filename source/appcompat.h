@@ -28,14 +28,14 @@ int set_app_offsets();
     #define APP_FCRAM_ADDR 0x14000000
 
     #define APP_CFW_OFFSET 0x400000
-    #define APP_LAUNCHER_PATH (L"YS:/" LAUNCHER_PATH)
+    #define APP_LAUNCHER_PATH (u"YS:/" LAUNCHER_PATH)
 
 #elif defined(ENTRY_SPIDER)
     // The usable area for this app
     #define APP_FCRAM_ADDR 0x18400000
 
     #define APP_CFW_OFFSET 0x4410000
-    #define APP_LAUNCHER_PATH (L"dmc:/" LAUNCHER_PATH)
+    #define APP_LAUNCHER_PATH (u"dmc:/" LAUNCHER_PATH)
 #endif
 
 // Locations in fcram

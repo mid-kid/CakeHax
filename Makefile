@@ -21,7 +21,7 @@ dir_rop3ds := rop3ds
 ARM9FLAGS := -mcpu=arm946e-s -march=armv5te
 ARM11FLAGS := -mcpu=mpcore
 ASFLAGS := -mlittle-endian
-LDFLAGS := -nostdlib -flto -fwhole-program -fno-builtin -fshort-wchar
+LDFLAGS := -nostdlib -flto -fwhole-program -fno-builtin
 CFLAGS := $(ASFLAGS) $(LDFLAGS) -marm -O2 -std=c11 -MMD -MP -Wall -Wextra -Wno-main -DLAUNCHER_PATH='"$(filepath)$(name)"'
 
 get_objects = $(patsubst $(dir_source)/%.s, $(dir_build)/%.o, \
